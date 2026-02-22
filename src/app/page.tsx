@@ -37,6 +37,11 @@ export default function Portfolio() {
     return () => clearInterval(interval);
   }, []);
 
+  // Webpage title
+  useEffect(() => {
+  document.title = "Kailash Shankar";
+}, []);
+
   // Scroll-based active section
   useEffect(() => {
     const handleScroll = () => {
@@ -317,6 +322,9 @@ export default function Portfolio() {
 
         @media (max-width: 768px) {
           .desktop-nav { display: none; }
+          .hero-content { flex-direction: column; text-align: center; }
+          .hero-text { order: 1; }
+          .hero-image { order: 2; margin-top: 32px; }
         }
         @media (min-width: 769px) {
           .mobile-menu { display: none; }
@@ -369,7 +377,7 @@ export default function Portfolio() {
               {NAV_LABELS[s]}
             </button>
           ))}
-          <a href="mailto:kailashshankar@ufl.edu" className="btn-gold" style={{ padding: "7px 18px", fontSize: "0.72rem" }}>Hire Me</a>
+          <a href="mailto:kailashshankar@ufl.edu" className="btn-gold" style={{ padding: "7px 18px", fontSize: "0.72rem" }}>Contact Me</a>
         </div>
 
         {/* Hamburger */}
@@ -410,66 +418,81 @@ export default function Portfolio() {
         <div className="glow-orb" style={{ width: 500, height: 500, background: "rgba(201,168,76,0.07)", top: "-100px", right: "-100px" }} />
         <div className="glow-orb" style={{ width: 300, height: 300, background: "rgba(194,65,12,0.05)", bottom: "100px", left: "-50px" }} />
 
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "120px 48px 80px", width: "100%" }}>
-          <div className="fade-up" style={{ marginBottom: 28 }}>
-            <span className="impact-badge">Open to Opportunities · Summer 2026</span>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "120px 48px 80px", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 60 }} className="hero-content">
+          
+          <div className="hero-text" style={{ flex: 1 }}>
+            <div className="fade-up" style={{ marginBottom: 28 }}>
+              <span className="impact-badge">Open to Opportunities · Summer 2026</span>
+            </div>
+            
+            <div className="fade-up delay-1" style={{ marginBottom: 4 }}>
+              <h2
+                style={{
+                  fontFamily: "'DM Serif Display', serif",
+                  fontSize: "clamp(3rem, 8vw, 7.5rem)",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  lineHeight: 1,
+                  letterSpacing: "-0.01em",
+                  background: "linear-gradient(160deg, #f5f0e8 30%, #c9a84c 60%, #e8c96e 80%, #a07830 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 4px 32px rgba(201,168,76,0.22))",
+                }}
+              >
+                Kailash Shankar
+              </h2>
+            </div>
+
+            <h1 className="font-display fade-up delay-2"
+              style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", lineHeight: 0.92, color: "var(--cream)", marginBottom: 8, marginTop: 10 }}>
+              BUILDING<br />
+              <span className="gold-text">TECHNOLOGY</span><br />
+              THAT MATTERS
+            </h1>
+
+            <p className="font-body fade-up delay-3"
+              style={{ fontSize: "1.3rem", color: "var(--muted)", marginTop: 28, maxWidth: 560, lineHeight: 1.6, fontStyle: "italic" }}>
+              <span style={{ color: "var(--cream)" }}>{typed}</span>
+              <span className="cursor" />
+              <br />
+              University of Florida · CS + Linguistics · GPA 4.0
+            </p>
+
+            <div className="fade-up delay-4" style={{ display: "flex", gap: 24, marginTop: 44, flexWrap: "wrap", alignItems: "center" }}>
+              <button onClick={() => scrollTo("projects")} className="btn-gold">View My Work</button>
+              <a href="mailto:kailashshankar@ufl.edu" style={{ color: "var(--gold)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }} className="anim-underline">
+                kailashshankar@ufl.edu →
+              </a>
+            </div>
           </div>
 
-          <div className="fade-up delay-1" style={{ marginBottom: 4 }}>
-            <h2
-              style={{
-                fontFamily: "'DM Serif Display', serif",
-                fontSize: "clamp(3rem, 8vw, 7.5rem)",
-                fontWeight: 400,
-                fontStyle: "italic",
-                lineHeight: 1,
-                letterSpacing: "-0.01em",
-                background: "linear-gradient(160deg, #f5f0e8 30%, #c9a84c 60%, #e8c96e 80%, #a07830 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                filter: "drop-shadow(0 4px 32px rgba(201,168,76,0.22))",
-              }}
-            >
-              Kailash Shankar
-            </h2>
-          </div>
-
-          <h1 className="font-display fade-up delay-2"
-            style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", lineHeight: 0.92, color: "var(--cream)", marginBottom: 8, marginTop: 10 }}>
-            BUILDING<br />
-            <span className="gold-text">TECHNOLOGY</span><br />
-            THAT MATTERS
-          </h1>
-
-          <p className="font-body fade-up delay-3"
-            style={{ fontSize: "1.3rem", color: "var(--muted)", marginTop: 28, maxWidth: 560, lineHeight: 1.6, fontStyle: "italic" }}>
-            <span style={{ color: "var(--cream)" }}>{typed}</span>
-            <span className="cursor" />
-            <br />
-            University of Florida · CS + Linguistics · GPA 4.0
-          </p>
-
-          <div className="fade-up delay-4" style={{ display: "flex", gap: 24, marginTop: 44, flexWrap: "wrap", alignItems: "center" }}>
-            <button onClick={() => scrollTo("projects")} className="btn-gold">View My Work</button>
-            <a href="mailto:kailashshankar@ufl.edu" style={{ color: "var(--gold)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }} className="anim-underline">
-              kailashshankar@ufl.edu →
-            </a>
-          </div>
-
-          {/* Stats row */}
-          <div style={{ display: "flex", gap: 48, marginTop: 72, flexWrap: "wrap" }}>
-            {[
-              { num: "30+", label: "Settlements Mapped" },
-              { num: "2,000", label: "Languages Benchmarked" },
-              { num: "50+", label: "Students Served" },
-              { num: "4.00", label: "GPA" },
-            ].map((s) => (
-              <div key={s.label} className="stat-box fade-up delay-4">
-                <div className="font-display" style={{ fontSize: "2.4rem", color: "var(--gold-light)" }}>{s.num}</div>
-                <div className="font-mono" style={{ fontSize: "0.68rem", color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>{s.label}</div>
-              </div>
-            ))}
+         <div className="hero-image fade-up delay-2" style={{ flexShrink: 0 }}>
+             <img 
+                src="profile_pic.jpg" 
+                alt="Profile Picture" 
+                style={{ 
+                  width: "clamp(280px, 35vw, 480px)", 
+                  height: "clamp(280px, 35vw, 480px)", 
+                  borderRadius: "50%", 
+                  objectFit: "cover", 
+                  border: "1px solid rgba(201,168,76,0.2)",
+                  transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                  boxShadow: "0 0 0px rgba(201,168,76,0)",
+                  cursor: "pointer"
+                }} 
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = "0 0 60px rgba(201,168,76,0.35), 0 0 120px rgba(201,168,76,0.15)";
+                  e.currentTarget.style.borderColor = "rgba(201,168,76,0.6)";
+                  e.currentTarget.style.transform = "scale(1.02)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = "0 0 0px rgba(201,168,76,0)";
+                  e.currentTarget.style.borderColor = "rgba(201,168,76,0.2)";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              />
           </div>
         </div>
 
@@ -516,7 +539,7 @@ export default function Portfolio() {
               impact="30+ settlements connected · 100+ MAU"
               emoji="🌍"
               description={
-                `Embedded with a non-profit in Cape Town, I built an interactive mapping application giving residents of underprivileged neighborhoods direct access to local government contacts and a channel to report critical housing issues — from evictions to power outages and water shortages. Every pin on that map represents a family that now has a voice. Built on a MERN stack with a custom REST API, the platform serves 100+ monthly active users across 30+ informal settlements in the Western Cape.`
+                `Working with a non-profit in Cape Town, I built an interactive mapping application giving residents of underprivileged neighborhoods direct access to local government contacts and a channel to report critical housing issues — from evictions to power outages and water shortages. Every pin on that map represents a family that now has a voice. Built on a MERN stack with a custom REST API, the platform serves 100+ monthly active users across 30+ informal settlements in the Western Cape.`
               }
             />
 
@@ -528,7 +551,7 @@ export default function Portfolio() {
               role="Machine Learning Engineer"
               tags={["Next.js", "FastAPI", "Gemini 2.0", "RAG", "ChromaDB"]}
               impact="95% accuracy · 30% ↓ hallucinations · <500ms retrieval"
-              emoji="🤖"
+              emoji="💻"
               description={
                 `Built an AI Teaching Assistant that deploys course-specific chatbot instances for 50+ students, with Gemini 2.0 orchestration and custom guardrails that cut hallucination rates by 30% while maintaining academic integrity. Engineered a RAG pipeline with ChromaDB achieving sub-500ms semantic retrieval across 1,000+ academic documents.`
               }
@@ -699,7 +722,7 @@ export default function Portfolio() {
                 subtitle: "Resume Optimizer & Interview Simulator",
                 description: "End-to-end AI career prep tool: Gemini-powered ATS-compliant resume generation, mock interview engine with performance persistence, and automated weekly industry skill & salary trend updates via Inngest workflows.",
                 tags: ["Next.js", "NeonDB", "Prisma", "Inngest", "Gemini Flash"],
-                emoji: "🚀",
+                emoji: "💼",
               },
               {
                 id: "housing",
@@ -790,7 +813,7 @@ export default function Portfolio() {
 
           <div className="gold-divider" style={{ margin: "64px 0 32px" }} />
           <p className="font-mono" style={{ color: "var(--muted)", fontSize: "0.72rem", letterSpacing: "0.1em" }}>
-            © 2026 KAILASH SHANKAR · GAINESVILLE, FL · UF CLASS OF 2027
+            © 2026 KAILASH SHANKAR · GAINESVILLE, FL
           </p>
         </div>
       </section>
