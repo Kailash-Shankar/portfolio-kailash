@@ -124,3 +124,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+section { 
+  scroll-margin-top: 100px; /* Adjust this to match your navbar height */
+}
