@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import DotGrid from "../components/DotGrid";
+
 
 const SECTIONS = ["about", "experience", "research", "projects", "contact"];
 
@@ -20,7 +22,6 @@ export default function Portfolio() {
   const [typed, setTyped] = useState("");
   const fullTitle = "Software Engineer & Researcher";
 
-  // Typewriter effect
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -31,27 +32,20 @@ export default function Portfolio() {
     return () => clearInterval(interval);
   }, []);
 
-  // Set Page Title
   useEffect(() => {
     document.title = "Kailash Shankar";
   }, []);
 
-  // Robust Scroll Spy Logic
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      
       const viewportHeight = window.innerHeight;
       const scrollHeight = document.documentElement.scrollHeight;
       const currentScroll = window.scrollY;
-
-      // 1. Forced Bottom Check
       if (currentScroll + viewportHeight >= scrollHeight - 60) {
         setActive("contact");
         return;
       }
-
-      // 2. Proximity Check
       const offset = 160;
       for (const id of [...SECTIONS].reverse()) {
         const el = document.getElementById(id);
@@ -63,9 +57,8 @@ export default function Portfolio() {
         }
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); 
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -77,11 +70,7 @@ export default function Portfolio() {
       const elementRect = el.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
     setMenuOpen(false);
   };
@@ -112,7 +101,6 @@ export default function Portfolio() {
           overflow-x: hidden;
         }
 
-        /* Noise texture overlay */
         body::before {
           content: '';
           position: fixed;
@@ -212,8 +200,8 @@ export default function Portfolio() {
         .delay-4 { animation-delay: 0.6s; opacity: 0; }
 
         .section-label {
-          font-family: 'IBM Plex Mono',
-          font-size: 0.82rem;
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.72rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--gold);
@@ -494,9 +482,7 @@ export default function Portfolio() {
                   <h3 className="font-serif" style={{ fontSize: "1.9rem", color: "var(--cream)", marginBottom: 8 }}>Computational Linguistics Lab</h3>
                   <p className="font-mono" style={{ color: "var(--gold)", fontSize: "0.78rem", letterSpacing: "0.08em" }}>University of Florida · Advisor: Dr. Zoey Liu</p>
                 </div>
-                <div style={{ textAlign: "right" }}>
-                 
-                </div>
+                <div style={{ textAlign: "right" }} />
               </div>
               <div className="gold-divider" style={{ margin: "32px 0" }} />
               <p className="font-body" style={{ fontSize: "1.15rem", lineHeight: 1.75, color: "var(--cream)", marginBottom: 24, maxWidth: 760 }}>
@@ -512,9 +498,9 @@ export default function Portfolio() {
               </div>
             </div>
             {[
-              { icon: "⚖️", title: "Quality vs. Quantity", body: "Systematically modeling the trade-off between dataset scale and annotation fidelity — a fundamental question with outsized implications for languages where data is precious." },
-              { icon: "🌐", title: "2,000 Languages Tested", body: "Benchmarking across a typologically diverse language set to understand how massive multilingual scale affects cross-linguistic transfer beyond high-resource language clusters." },
-              { icon: "🔬", title: "Morphological Segmentation", body: "Investigating cross-lingual partitioning of morphologically segmented data across language families to improve zero-shot performance for understudied tongues." },
+              { icon: "", title: "Quality vs. Quantity", body: "Systematically modeling the trade-off between dataset scale and annotation fidelity — a fundamental question with outsized implications for languages where data is precious." },
+              { icon: "", title: "2,000 Languages Tested", body: "Benchmarking across a typologically diverse language set to understand how massive multilingual scale affects cross-linguistic transfer beyond high-resource language clusters." },
+              { icon: "", title: "Morphological Segmentation", body: "Investigating cross-lingual partitioning of morphologically segmented data across language families to improve zero-shot performance for understudied tongues." },
             ].map((c) => (
               <div key={c.title} className="impact-card" style={{ padding: "32px", background: "var(--bg3)" }}>
                 <div style={{ fontSize: "1.8rem", marginBottom: 14 }}>{c.icon}</div>
@@ -536,7 +522,6 @@ export default function Portfolio() {
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
 
-          {/* Lingua */}
           <div className="impact-card" style={{ padding: "0", marginBottom: 24, overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <div style={{ padding: "56px 48px", borderRight: "1px solid var(--border)", position: "relative" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg, var(--gold), var(--amber))" }} />
@@ -557,10 +542,10 @@ export default function Portfolio() {
               <p className="section-label" style={{ marginBottom: 28 }}>Platform Features</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
                 {[
-                  { icon: "🎭", title: "AI Conversation Characters", body: "Each character has a distinct personality and life story, enabling contextually rich, authentic language practice." },
-                  { icon: "📋", title: "Teacher Assignment Studio", body: "Teachers define topic, theme, depth, key vocabulary, and grammar tenses — then let students take it from there." },
-                  { icon: "📊", title: "Real-Time Performance Insights", body: "Multi-dimensional AI feedback after every conversation — what you did well, what to improve, tracked over time." },
-                  { icon: "🔒", title: "Secure Role-Based Access", body: "Supabase Auth + Row Level Security cleanly separates student and teacher experiences with zero data bleed." },
+                  { icon: "", title: "AI Conversation Characters", body: "Each character has a distinct personality and life story, enabling contextually rich, authentic language practice." },
+                  { icon: "", title: "Teacher Assignment Studio", body: "Teachers define topic, theme, depth, key vocabulary, and grammar tenses — then let students take it from there." },
+                  { icon: "", title: "Real-Time Performance Insights", body: "Multi-dimensional AI feedback after every conversation — what you did well, what to improve, tracked over time." },
+                  { icon: "", title: "Secure Role-Based Access", body: "Supabase Auth + Row Level Security cleanly separates student and teacher experiences with zero data bleed." },
                 ].map((f) => (
                   <div key={f.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                     <div style={{ fontSize: "1.3rem", marginTop: 2 }}>{f.icon}</div>
@@ -574,7 +559,6 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Other projects */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {[
               { id: "career", title: "AI Career Coach", date: "Nov – Dec 2025", subtitle: "Resume Optimizer & Interview Simulator", description: "End-to-end AI career prep tool: Gemini-powered ATS-compliant resume generation, mock interview engine with performance persistence, and automated weekly industry skill & salary trend updates via Inngest workflows.", tags: ["Next.js", "NeonDB", "Prisma", "Inngest", "Gemini Flash"], emoji: "" },
@@ -634,9 +618,17 @@ export default function Portfolio() {
 
       {/* ── CONTACT ─────────────────────────────────────────────────── */}
       <section id="contact" style={{ padding: "120px 0", background: "var(--bg)", position: "relative", overflow: "hidden" }}>
+        {/* ReactBits DotGrid background */}
+        <DotGrid
+          dotSize={3}
+          gap={22}
+          dotColor="rgba(201,168,76,0.3)"
+          hoverColor="#e8c96e"
+          hoverRadius={100}
+        />
         <div className="glow-orb" style={{ width: 600, height: 600, background: "rgba(201,168,76,0.04)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
-        <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 48px", textAlign: "center", position: "relative" }}>
-          <span className="section-label" style={{ display: "block", marginBottom: 20 }}>05 — Let's Build Something</span>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", padding: "0 48px", textAlign: "center" }}>
+          <span className="section-label" style={{ display: "block", marginBottom: 20 }}>Let's Build Something</span>
           <h2 className="font-display" style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--cream)", lineHeight: 0.95, marginBottom: 32 }}>
             REAL PROBLEMS.<br />
             <span className="gold-text">REAL SOLUTIONS.</span>
