@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import DotGrid from "../components/DotGrid";
+
 
 
 const SECTIONS = ["about", "experience", "research", "projects", "contact"];
@@ -869,14 +869,7 @@ export default function Portfolio() {
 
       {/* ── CONTACT ─────────────────────────────────────────────────── */}
       <section id="contact" style={{ padding: "120px 0", background: "var(--bg)", position: "relative", overflow: "hidden" }}>
-        {/* ReactBits DotGrid background */}
-        <DotGrid
-          dotSize={3}
-          gap={22}
-          baseColor="#c9a84c"
-          activeColor="#f59e0b"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        />
+
         {/* ── Contact Sparkles ── */}
         {[
           { top: "8%",  left: "4%",   size: 28, dur: "3.5s", delay: "0s",   anim: "sparkleTwinkle" },
