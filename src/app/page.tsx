@@ -75,6 +75,54 @@ export default function Portfolio() {
     setMenuOpen(false);
   };
 
+  const STARS = [
+    { top: "9%",  left: "5%",   size: 56, dur: "9s",    delay: "0s",   anim: "starDrift"  },
+    { top: "15%", left: "42%",  size: 26, dur: "6.5s",  delay: "1.4s", anim: "starPulse"  },
+    { top: "6%",  right: "18%", size: 44, dur: "11s",   delay: "0.7s", anim: "starFloat"  },
+    { top: "70%", left: "3%",   size: 36, dur: "8.5s",  delay: "2.1s", anim: "starFloat"  },
+    { top: "58%", left: "26%",  size: 20, dur: "7s",    delay: "3.3s", anim: "starPulse"  },
+    { top: "20%", right: "5%",  size: 64, dur: "13s",   delay: "0.3s", anim: "starDrift"  },
+    { top: "78%", right: "9%",  size: 40, dur: "10s",   delay: "1.9s", anim: "starFloat"  },
+    { top: "44%", left: "11%",  size: 22, dur: "5.5s",  delay: "4.2s", anim: "starPulse"  },
+    { top: "86%", left: "52%",  size: 48, dur: "12s",   delay: "2.7s", anim: "starDrift"  },
+    { top: "33%", right: "28%", size: 18, dur: "8s",    delay: "1.1s", anim: "starPulse"  },
+    { top: "50%", right: "3%",  size: 30, dur: "9.5s",  delay: "0.5s", anim: "starFloat"  },
+    { top: "3%",  left: "22%",  size: 16, dur: "6s",    delay: "2.9s", anim: "starPulse"  },
+    { top: "92%", left: "8%",   size: 24, dur: "10.5s", delay: "1.6s", anim: "starDrift"  },
+    { top: "38%", left: "48%",  size: 14, dur: "7.5s",  delay: "3.8s", anim: "starPulse"  },
+    { top: "62%", right: "22%", size: 52, dur: "14s",   delay: "0.9s", anim: "starDrift"  },
+    { top: "25%", left: "18%",  size: 18, dur: "5s",    delay: "5.1s", anim: "starPulse"  },
+    { top: "74%", left: "38%",  size: 28, dur: "9s",    delay: "2.4s", anim: "starFloat"  },
+    { top: "12%", right: "40%", size: 20, dur: "7s",    delay: "4.6s", anim: "starPulse"  },
+    { top: "55%", left: "58%",  size: 34, dur: "11.5s", delay: "1.3s", anim: "starFloat"  },
+    { top: "90%", right: "30%", size: 22, dur: "8s",    delay: "3.0s", anim: "starPulse"  },
+    { top: "42%", right: "14%", size: 16, dur: "6.5s",  delay: "4.0s", anim: "starPulse"  },
+    { top: "18%", left: "62%",  size: 38, dur: "12.5s", delay: "0.2s", anim: "starDrift"  },
+    { top: "80%", left: "20%",  size: 20, dur: "7s",    delay: "5.5s", anim: "starPulse"  },
+    { top: "30%", left: "32%",  size: 14, dur: "6s",    delay: "2.2s", anim: "starPulse"  },
+    { top: "65%", right: "42%", size: 42, dur: "10s",   delay: "1.7s", anim: "starFloat"  },
+    { top: "4%",  left: "72%",  size: 18, dur: "7s",    delay: "3.5s", anim: "starPulse"  },
+    { top: "47%", left: "36%",  size: 12, dur: "5.5s",  delay: "6.0s", anim: "starPulse"  },
+    { top: "96%", left: "44%",  size: 30, dur: "9s",    delay: "0.8s", anim: "starFloat"  },
+    { top: "22%", right: "52%", size: 46, dur: "13.5s", delay: "1.0s", anim: "starDrift"  },
+    { top: "68%", left: "68%",  size: 16, dur: "6.5s",  delay: "4.8s", anim: "starPulse"  },
+    { top: "10%", left: "88%",  size: 34, dur: "10s",   delay: "2.0s", anim: "starFloat"  },
+    { top: "83%", right: "48%", size: 20, dur: "7.5s",  delay: "3.6s", anim: "starPulse"  },
+    { top: "37%", left: "78%",  size: 28, dur: "9.5s",  delay: "1.5s", anim: "starFloat"  },
+    { top: "52%", right: "60%", size: 14, dur: "5s",    delay: "5.8s", anim: "starPulse"  },
+    { top: "76%", left: "82%",  size: 50, dur: "12s",   delay: "0.4s", anim: "starDrift"  },
+    { top: "28%", right: "70%", size: 16, dur: "6s",    delay: "4.4s", anim: "starPulse"  },
+    { top: "60%", left: "14%",  size: 24, dur: "8.5s",  delay: "2.8s", anim: "starFloat"  },
+    { top: "7%",  left: "54%",  size: 32, dur: "11s",   delay: "1.2s", anim: "starDrift"  },
+    { top: "94%", right: "18%", size: 18, dur: "7s",    delay: "3.2s", anim: "starPulse"  },
+    { top: "40%", right: "82%", size: 22, dur: "8s",    delay: "5.3s", anim: "starFloat"  },
+    { top: "16%", left: "8%",   size: 14, dur: "5.5s",  delay: "6.5s", anim: "starPulse"  },
+    { top: "72%", right: "65%", size: 36, dur: "10.5s", delay: "0.6s", anim: "starDrift"  },
+    { top: "48%", left: "92%",  size: 20, dur: "7.5s",  delay: "3.9s", anim: "starPulse"  },
+    { top: "85%", left: "62%",  size: 26, dur: "9s",    delay: "2.3s", anim: "starFloat"  },
+    { top: "35%", right: "8%",  size: 16, dur: "6s",    delay: "5.0s", anim: "starPulse"  },
+  ];
+
   return (
     <>
       <style>{`
@@ -149,14 +197,14 @@ export default function Portfolio() {
           width: 0;
           height: 1px;
           background: var(--gold);
-          transition: width 0.35s ease;
+          transition: width 0.08s ease;
         }
         .anim-underline:hover::after { width: 100%; }
 
         .impact-card {
           background: var(--bg2);
           border: 1px solid var(--border);
-          transition: all 0.3s ease;
+          transition: all 0.08s ease;
         }
         .impact-card:hover {
           border-color: var(--gold);
@@ -235,7 +283,7 @@ export default function Portfolio() {
           font-size: 0.78rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          transition: all 0.25s;
+          transition: all 0.08s;
           cursor: pointer;
           background: transparent;
           text-decoration: none;
@@ -270,9 +318,168 @@ export default function Portfolio() {
           z-index: 200;
           padding: 80px 32px 32px;
           transform: translateX(100%);
-          transition: transform 0.35s ease;
+          transition: transform 0.08s ease;
         }
         .mobile-menu.open { transform: translateX(0); }
+
+        /* ── Golden Stars ── */
+        @keyframes starPulse {
+          0%, 100% { opacity: 0.2;  transform: rotate(0deg)   scale(0.82); }
+          50%       { opacity: 0.75; transform: rotate(180deg) scale(1.2);  }
+        }
+        @keyframes starFloat {
+          0%   { opacity: 0.25; transform: translateY(0px)   rotate(0deg)   scale(1);    }
+          33%  { opacity: 0.72; transform: translateY(-24px) rotate(120deg) scale(1.14); }
+          66%  { opacity: 0.38; transform: translateY(10px)  rotate(240deg) scale(0.9);  }
+          100% { opacity: 0.25; transform: translateY(0px)   rotate(360deg) scale(1);    }
+        }
+        @keyframes starDrift {
+          0%   { opacity: 0.18; transform: translate(0px,   0px)   rotate(0deg)   scale(1);    }
+          25%  { opacity: 0.7;  transform: translate(16px, -26px)  rotate(90deg)  scale(1.18); }
+          50%  { opacity: 0.32; transform: translate(-10px,-16px)  rotate(180deg) scale(0.88); }
+          75%  { opacity: 0.65; transform: translate(-18px, 12px)  rotate(270deg) scale(1.1);  }
+          100% { opacity: 0.18; transform: translate(0px,   0px)   rotate(360deg) scale(1);    }
+        }
+        .hero-star {
+          position: absolute;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        /* ── Profile pic frame + glow ── */
+        @keyframes frameSpin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        @keyframes frameSpinReverse {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(-360deg); }
+        }
+        .profile-wrapper {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .profile-frame-outer {
+          position: absolute;
+          inset: -10px;
+          border-radius: 50%;
+          background: conic-gradient(
+            #e8c96e 0deg,
+            #c9a84c 60deg,
+            transparent 90deg,
+            transparent 150deg,
+            #f59e0b 180deg,
+            #e8c96e 210deg,
+            transparent 240deg,
+            transparent 300deg,
+            #c9a84c 330deg,
+            #e8c96e 360deg
+          );
+          animation: frameSpin 10s linear infinite;
+          opacity: 0.7;
+          transition: opacity 0.08s ease;
+        }
+        .profile-frame-inner {
+          position: absolute;
+          inset: -5px;
+          border-radius: 50%;
+          background: conic-gradient(
+            transparent 0deg,
+            #c9a84c 45deg,
+            #e8c96e 90deg,
+            transparent 135deg,
+            transparent 180deg,
+            #f59e0b 225deg,
+            #c9a84c 270deg,
+            transparent 315deg,
+            transparent 360deg
+          );
+          animation: frameSpinReverse 7s linear infinite;
+          opacity: 0.5;
+          transition: opacity 0.08s ease;
+        }
+        .profile-frame-mask {
+          position: absolute;
+          inset: -4px;
+          border-radius: 50%;
+          background: var(--bg);
+        }
+        .profile-img {
+          position: relative;
+          z-index: 1;
+          transition: box-shadow 0.08s ease, transform 0.08s ease;
+          border: 2px solid rgba(201,168,76,0.35) !important;
+        }
+        .profile-wrapper:hover .profile-frame-outer { opacity: 1; }
+        .profile-wrapper:hover .profile-frame-inner { opacity: 0.9; }
+        .profile-wrapper:hover .profile-img {
+          box-shadow:
+            0 0 30px rgba(201,168,76,0.9),
+            0 0 70px rgba(201,168,76,0.5),
+            0 0 140px rgba(232,201,110,0.3),
+            0 0 220px rgba(201,168,76,0.15);
+          border-color: rgba(201,168,76,0.9) !important;
+          transform: scale(1.025);
+        }
+
+        /* ── Contact Sparkles ── */
+        @keyframes sparklePop {
+          0%   { opacity: 0;    transform: scale(0)    rotate(0deg);   }
+          20%  { opacity: 0.9;  transform: scale(1.2)  rotate(45deg);  }
+          60%  { opacity: 0.6;  transform: scale(0.9)  rotate(135deg); }
+          100% { opacity: 0;    transform: scale(0)    rotate(180deg); }
+        }
+        @keyframes sparkleFloat {
+          0%   { opacity: 0;    transform: translateY(0px)   scale(0)   rotate(0deg);   }
+          15%  { opacity: 0.85; transform: translateY(-8px)  scale(1.1) rotate(30deg);  }
+          55%  { opacity: 0.55; transform: translateY(-20px) scale(0.8) rotate(100deg); }
+          100% { opacity: 0;    transform: translateY(-36px) scale(0)   rotate(160deg); }
+        }
+        @keyframes sparkleTwinkle {
+          0%, 100% { opacity: 0;    transform: scale(0)   rotate(0deg);   }
+          30%       { opacity: 0.95; transform: scale(1.3) rotate(60deg);  }
+          70%       { opacity: 0.4;  transform: scale(0.7) rotate(120deg); }
+        }
+        .contact-sparkle {
+          position: absolute;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .glow-text {
+          transition: text-shadow 0.08s ease, filter 0.08s ease;
+          cursor: default;
+        }
+        .glow-text:hover {
+          text-shadow:
+            0 0 20px rgba(245,240,232,0.8),
+            0 0 50px rgba(245,240,232,0.4),
+            0 0 100px rgba(201,168,76,0.3);
+          filter: brightness(1.25);
+        }
+        .glow-text-gold {
+          transition: filter 0.08s ease;
+          cursor: default;
+        }
+        .glow-text-gold:hover {
+          filter: brightness(1.4) drop-shadow(0 0 18px rgba(232,201,110,0.9)) drop-shadow(0 0 40px rgba(201,168,76,0.5));
+        }
+
+        .glow-name {
+          transition: filter 0.08s ease;
+          cursor: default;
+          display: block;
+          width: fit-content;
+          filter: drop-shadow(0 4px 32px rgba(201,168,76,0.22));
+        }
+        .glow-name:hover {
+          filter:
+            drop-shadow(0 0 6px rgba(232,201,110,0.6))
+            drop-shadow(0 0 18px rgba(201,168,76,0.35))
+            brightness(1.08);
+        }
 
         @media (max-width: 850px) {
           .desktop-nav { display: none; }
@@ -295,7 +502,7 @@ export default function Portfolio() {
           background: scrollY > 60 ? "rgba(10,10,8,0.92)" : "transparent",
           backdropFilter: scrollY > 60 ? "blur(12px)" : "none",
           borderBottom: scrollY > 60 ? "1px solid rgba(201,168,76,0.1)" : "none",
-          transition: "all 0.35s ease",
+          transition: "all 0.08s ease",
           padding: "16px 48px",
           display: "flex",
           alignItems: "center",
@@ -304,7 +511,7 @@ export default function Portfolio() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--gold)", boxShadow: "0 0 10px var(--gold)" }} />
-          <span className="font-mono" style={{ color: "var(--gold)", fontSize: "0.82rem", letterSpacing: "0.1em" }}>KS</span>
+          <span className="font-mono" style={{ color: "var(--gold)", fontSize: "1rem", letterSpacing: "0.12em" }}>KS</span>
         </div>
 
         <div className="desktop-nav" style={{ display: "flex", gap: 40, alignItems: "center" }}>
@@ -316,14 +523,14 @@ export default function Portfolio() {
               style={{
                 background: "none", border: "none", cursor: "pointer",
                 color: active === s ? "var(--gold)" : "var(--muted)",
-                fontSize: "0.72rem", letterSpacing: "0.1em", textTransform: "uppercase",
+                fontSize: "0.88rem", letterSpacing: "0.12em", textTransform: "uppercase",
                 padding: 0,
               }}
             >
               {NAV_LABELS[s]}
             </button>
           ))}
-          <a href="Shankar_Kailash_Resume_2_21_26.pdf" download className="btn-gold" style={{ padding: "6px 16px", fontSize: "0.7rem" }}>
+          <a href="Shankar_Kailash_Resume_2_21_26.pdf" download className="btn-gold" style={{ padding: "7px 20px", fontSize: "0.82rem" }}>
             Resume
           </a>
         </div>
@@ -365,6 +572,45 @@ export default function Portfolio() {
         <div className="glow-orb" style={{ width: 500, height: 500, background: "rgba(201,168,76,0.07)", top: "-100px", right: "-100px" }} />
         <div className="glow-orb" style={{ width: 300, height: 300, background: "rgba(194,65,12,0.05)", bottom: "100px", left: "-50px" }} />
 
+        {/* ── Animated Golden Stars ── */}
+        {STARS.map((s, i) => (
+          <svg
+            key={i}
+            className="hero-star"
+            width={s.size}
+            height={s.size}
+            viewBox="0 0 100 100"
+            style={{
+              top: s.top,
+              left: (s as any).left,
+              right: (s as any).right,
+              animation: `${s.anim} ${s.dur} ease-in-out infinite ${s.delay}`,
+              filter: `drop-shadow(0 0 ${Math.round(s.size * 0.3)}px rgba(201,168,76,0.9)) drop-shadow(0 0 ${Math.round(s.size * 0.7)}px rgba(232,201,110,0.4))`,
+            }}
+          >
+            <defs>
+              <linearGradient id={`sg${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stopColor="#e8c96e" />
+                <stop offset="50%"  stopColor="#c9a84c" />
+                <stop offset="100%" stopColor="#f59e0b" />
+              </linearGradient>
+            </defs>
+            {/* Outer star outline */}
+            <polygon
+              points="50,2 61,35 97,35 68,57 79,91 50,70 21,91 32,57 3,35 39,35"
+              fill="none"
+              stroke={`url(#sg${i})`}
+              strokeWidth="3"
+              strokeLinejoin="round"
+            />
+            {/* Inner subtle fill */}
+            <polygon
+              points="50,18 57,38 79,38 62,50 68,71 50,59 32,71 38,50 21,38 43,38"
+              fill="rgba(201,168,76,0.07)"
+            />
+          </svg>
+        ))}
+
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "120px 48px 80px", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 60 }} className="hero-content">
           <div className="hero-text" style={{ flex: 1 }}>
             <div className="fade-up" style={{ marginBottom: 28 }}>
@@ -372,7 +618,7 @@ export default function Portfolio() {
             </div>
 
             <div className="fade-up delay-1" style={{ marginBottom: 4 }}>
-              <h2 style={{
+              <h2 className="glow-name" style={{
                 fontFamily: "'DM Serif Display', serif",
                 fontSize: "clamp(3rem, 8vw, 7.5rem)",
                 fontWeight: 400,
@@ -383,7 +629,7 @@ export default function Portfolio() {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                filter: "drop-shadow(0 4px 32px rgba(201,168,76,0.22))",
+                width: "fit-content",
               }}>
                 Kailash Shankar
               </h2>
@@ -391,9 +637,9 @@ export default function Portfolio() {
 
             <h1 className="font-display fade-up delay-2"
               style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", lineHeight: 0.92, color: "var(--cream)", marginBottom: 8, marginTop: 10 }}>
-              BUILDING<br />
-              <span className="gold-text">TECHNOLOGY</span><br />
-              THAT MATTERS
+              <span className="glow-text">BUILDING</span><br />
+              <span className="gold-text glow-text-gold">TECHNOLOGY</span><br />
+              <span className="glow-text">THAT MATTERS</span>
             </h1>
 
             <p className="font-body fade-up delay-3"
@@ -414,7 +660,12 @@ export default function Portfolio() {
             </div>
           </div>
           <div className="hero-image fade-up delay-2" style={{ flexShrink: 0 }}>
-            <img src="profile_pic.jpg" alt="Profile" style={{ width: "clamp(280px, 35vw, 480px)", height: "clamp(280px, 35vw, 480px)", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(201,168,76,0.2)" }} />
+            <div className="profile-wrapper">
+              <div className="profile-frame-outer" />
+              <div className="profile-frame-inner" />
+              <div className="profile-frame-mask" />
+              <img src="profile_pic.jpg" alt="Profile" className="profile-img" style={{ width: "clamp(280px, 35vw, 480px)", height: "clamp(280px, 35vw, 480px)", borderRadius: "50%", objectFit: "cover" }} />
+            </div>
           </div>
         </div>
       </section>
@@ -568,7 +819,7 @@ export default function Portfolio() {
                 onMouseEnter={() => setHoveredProject(p.id)}
                 onMouseLeave={() => setHoveredProject(null)}
                 style={{ padding: "40px", cursor: "default", position: "relative", overflow: "hidden" }}>
-                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: hoveredProject === p.id ? "linear-gradient(90deg, var(--gold), var(--amber))" : "transparent", transition: "background 0.3s" }} />
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: hoveredProject === p.id ? "linear-gradient(90deg, var(--gold), var(--amber))" : "transparent", transition: "background 0.08s" }} />
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
                   <span style={{ fontSize: "2rem" }}>{p.emoji}</span>
                   <span className="font-mono" style={{ fontSize: "0.68rem", color: "var(--muted)" }}>{p.date}</span>
@@ -622,16 +873,82 @@ export default function Portfolio() {
         <DotGrid
           dotSize={3}
           gap={22}
-          dotColor="rgba(201,168,76,0.3)"
-          hoverColor="#e8c96e"
-          hoverRadius={100}
+          baseColor="#c9a84c"
+          activeColor="#f59e0b"
         />
+        {/* ── Contact Sparkles ── */}
+        {[
+          { top: "8%",  left: "4%",   size: 28, dur: "3.5s", delay: "0s",   anim: "sparkleTwinkle" },
+          { top: "12%", left: "22%",  size: 18, dur: "2.8s", delay: "0.7s", anim: "sparklePop"     },
+          { top: "6%",  right: "8%",  size: 34, dur: "4s",   delay: "0.3s", anim: "sparkleFloat"   },
+          { top: "20%", right: "18%", size: 22, dur: "3.2s", delay: "1.5s", anim: "sparkleTwinkle" },
+          { top: "75%", left: "6%",   size: 30, dur: "3.8s", delay: "0.9s", anim: "sparkleFloat"   },
+          { top: "85%", left: "28%",  size: 20, dur: "2.5s", delay: "2.1s", anim: "sparklePop"     },
+          { top: "70%", right: "5%",  size: 36, dur: "4.2s", delay: "0.5s", anim: "sparkleTwinkle" },
+          { top: "88%", right: "20%", size: 18, dur: "3s",   delay: "1.8s", anim: "sparklePop"     },
+          { top: "40%", left: "2%",   size: 26, dur: "3.6s", delay: "3.0s", anim: "sparkleFloat"   },
+          { top: "55%", right: "2%",  size: 22, dur: "2.9s", delay: "1.2s", anim: "sparkleTwinkle" },
+          { top: "30%", left: "14%",  size: 16, dur: "2.4s", delay: "4.0s", anim: "sparklePop"     },
+          { top: "65%", left: "42%",  size: 28, dur: "3.9s", delay: "0.6s", anim: "sparkleFloat"   },
+          { top: "15%", right: "35%", size: 20, dur: "3.1s", delay: "2.5s", anim: "sparkleTwinkle" },
+          { top: "92%", left: "55%",  size: 32, dur: "4.5s", delay: "1.0s", anim: "sparkleFloat"   },
+          { top: "48%", right: "32%", size: 18, dur: "2.7s", delay: "3.5s", anim: "sparklePop"     },
+          { top: "22%", left: "68%",  size: 24, dur: "3.4s", delay: "0.2s", anim: "sparkleTwinkle" },
+          { top: "80%", left: "72%",  size: 34, dur: "4.1s", delay: "2.8s", anim: "sparkleFloat"   },
+          { top: "35%", right: "48%", size: 16, dur: "2.6s", delay: "4.8s", anim: "sparklePop"     },
+          { top: "58%", left: "18%",  size: 22, dur: "3.7s", delay: "1.6s", anim: "sparkleTwinkle" },
+          { top: "5%",  left: "50%",  size: 28, dur: "3.3s", delay: "2.3s", anim: "sparkleFloat"   },
+          { top: "45%", left: "35%",  size: 20, dur: "3.0s", delay: "5.2s", anim: "sparklePop"     },
+          { top: "18%", left: "82%",  size: 26, dur: "4.3s", delay: "1.1s", anim: "sparkleFloat"   },
+          { top: "62%", right: "38%", size: 18, dur: "2.9s", delay: "3.8s", anim: "sparkleTwinkle" },
+          { top: "95%", left: "16%",  size: 24, dur: "3.6s", delay: "0.4s", anim: "sparklePop"     },
+          { top: "28%", right: "62%", size: 30, dur: "4.0s", delay: "2.6s", anim: "sparkleFloat"   },
+          { top: "72%", left: "55%",  size: 16, dur: "2.7s", delay: "5.5s", anim: "sparkleTwinkle" },
+          { top: "10%", left: "38%",  size: 22, dur: "3.5s", delay: "1.9s", anim: "sparklePop"     },
+          { top: "50%", left: "88%",  size: 28, dur: "4.4s", delay: "0.8s", anim: "sparkleFloat"   },
+          { top: "82%", right: "55%", size: 20, dur: "3.2s", delay: "4.3s", anim: "sparkleTwinkle" },
+          { top: "38%", left: "62%",  size: 18, dur: "2.8s", delay: "6.0s", anim: "sparklePop"     },
+        ].map((s, i) => (
+          <svg
+            key={i}
+            className="contact-sparkle"
+            width={s.size}
+            height={s.size}
+            viewBox="0 0 24 24"
+            style={{
+              top: s.top,
+              left: (s as any).left,
+              right: (s as any).right,
+              animation: `${s.anim} ${s.dur} ease-in-out infinite ${s.delay}`,
+              filter: `drop-shadow(0 0 ${Math.round(s.size * 0.5)}px rgba(201,168,76,1)) drop-shadow(0 0 ${Math.round(s.size * 1.0)}px rgba(232,201,110,0.6)) drop-shadow(0 0 ${Math.round(s.size * 1.6)}px rgba(245,200,80,0.25))`,
+            }}
+          >
+            <defs>
+              <linearGradient id={`spk${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stopColor="#f5f0e8" />
+                <stop offset="50%"  stopColor="#e8c96e" />
+                <stop offset="100%" stopColor="#c9a84c" />
+              </linearGradient>
+            </defs>
+            {/* 4-point sparkle / diamond cross */}
+            <path
+              d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z"
+              fill={`url(#spk${i})`}
+              opacity="0.9"
+            />
+            {/* tiny inner diamond */}
+            <path
+              d="M12 8 L13 12 L12 16 L11 12 Z"
+              fill="rgba(245,240,232,0.6)"
+            />
+          </svg>
+        ))}
         <div className="glow-orb" style={{ width: 600, height: 600, background: "rgba(201,168,76,0.04)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", padding: "0 48px", textAlign: "center" }}>
           <span className="section-label" style={{ display: "block", marginBottom: 20 }}>Let's Build Something</span>
           <h2 className="font-display" style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--cream)", lineHeight: 0.95, marginBottom: 32 }}>
-            REAL PROBLEMS.<br />
-            <span className="gold-text">REAL SOLUTIONS.</span>
+            <span className="glow-text">REAL PROBLEMS.</span><br />
+            <span className="gold-text glow-text-gold">REAL SOLUTIONS.</span>
           </h2>
           <p className="font-body" style={{ fontSize: "1.2rem", color: "var(--muted)", lineHeight: 1.7, marginBottom: 48, fontStyle: "italic" }}>
             I'm looking for opportunities where I can keep doing what I love — building technology that has a genuine impact on real people's lives. Whether that's a full-time role, a research collaboration, or an internship for Summer 2026, let's talk.
