@@ -875,6 +875,7 @@ export default function Portfolio() {
           gap={22}
           baseColor="#c9a84c"
           activeColor="#f59e0b"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
         />
         {/* ── Contact Sparkles ── */}
         {[
