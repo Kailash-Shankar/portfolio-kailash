@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-
+import { MessageCircle, BookOpen, Pencil, Mic } from "lucide-react";
 
 const SECTIONS = ["about", "experience", "research", "projects", "contact"];
 
@@ -126,7 +125,7 @@ export default function Portfolio() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
 
         :root {
           --bg: #0a0a08;
@@ -165,8 +164,32 @@ export default function Portfolio() {
 
         .font-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.03em; }
         .font-serif { font-family: 'DM Serif Display', serif; }
-        .font-mono { font-family: 'IBM Plex Mono', monospace; }
+        .font-mono { font-family: 'DM Sans', system-ui, sans-serif; }
         .font-body { font-family: 'Crimson Pro', serif; }
+        .font-hero {
+          font-family: 'DM Serif Display', Georgia, serif;
+          font-weight: 400;
+          letter-spacing: -0.01em;
+        }
+
+        .lingua-link {
+          position: relative;
+          display: inline-block;
+          color: var(--cream);
+          text-decoration: none;
+        }
+        .lingua-link::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -6px;
+          width: 0;
+          height: 3px;
+          background: linear-gradient(90deg, var(--gold), var(--amber));
+          border-radius: 2px;
+          transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .lingua-link:hover::after { width: 100%; }
 
         .grid-lines {
           position: absolute;
@@ -213,7 +236,7 @@ export default function Portfolio() {
         }
 
         .tag {
-          font-family: 'IBM Plex Mono', monospace;
+          font-family: 'DM Sans', system-ui, sans-serif;
           font-size: 0.68rem;
           padding: 2px 8px;
           border: 1px solid var(--border);
@@ -248,7 +271,7 @@ export default function Portfolio() {
         .delay-4 { animation-delay: 0.6s; opacity: 0; }
 
         .section-label {
-          font-family: 'IBM Plex Mono', monospace;
+          font-family: 'DM Sans', system-ui, sans-serif;
           font-size: 0.72rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -263,7 +286,7 @@ export default function Portfolio() {
         }
 
         .impact-badge {
-          font-family: 'IBM Plex Mono', monospace;
+          font-family: 'DM Sans', system-ui, sans-serif;
           font-size: 0.62rem;
           letter-spacing: 0.12em;
           padding: 3px 10px;
@@ -279,7 +302,7 @@ export default function Portfolio() {
           padding: 10px 28px;
           border: 1px solid var(--gold);
           color: var(--gold);
-          font-family: 'IBM Plex Mono', monospace;
+          font-family: 'DM Sans', system-ui, sans-serif;
           font-size: 0.78rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
@@ -568,6 +591,162 @@ export default function Portfolio() {
           padding: 11px 28px;
           border-radius: 999px;
         }
+
+        /* ── Carousel ── */
+        .carousel {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          background: var(--bg3);
+          overflow: hidden;
+        }
+        .carousel-track {
+          display: flex;
+          height: 100%;
+          transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .carousel-slide {
+          flex-shrink: 0;
+          height: 100%;
+          object-fit: cover;
+        }
+        .carousel-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          background: rgba(10,10,8,0.55);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(201,168,76,0.32);
+          color: var(--gold-light);
+          font-family: 'DM Serif Display', Georgia, serif;
+          font-size: 1.7rem;
+          line-height: 1;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0 4px 0;
+          transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+          z-index: 2;
+        }
+        .carousel-arrow:hover {
+          background: rgba(201,168,76,0.9);
+          color: var(--bg);
+          border-color: var(--gold);
+          transform: translateY(-50%) scale(1.06);
+        }
+        .carousel-dots {
+          position: absolute;
+          bottom: 18px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 8px;
+          padding: 8px 14px;
+          border-radius: 999px;
+          background: rgba(10,10,8,0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 2;
+        }
+        .carousel-dot {
+          height: 8px;
+          width: 8px;
+          border-radius: 999px;
+          background: rgba(245,240,232,0.4);
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease;
+        }
+        .carousel-dot.active {
+          width: 26px;
+          background: var(--gold-light);
+        }
+
+        /* ── Next Up: GlobalLogic ── */
+        .gl-logo {
+          width: clamp(280px, 38vw, 520px);
+          aspect-ratio: 800 / 270;
+          background: linear-gradient(135deg, #ffb15a 0%, #ff7a1c 45%, #ff5a00 100%);
+          -webkit-mask: url('/globallogic-logo-text.png') center / contain no-repeat;
+                  mask: url('/globallogic-logo-text.png') center / contain no-repeat;
+          animation: glLogoGlow 3.2s ease-in-out infinite;
+          transition: background 0.4s ease, transform 0.4s ease;
+        }
+        @keyframes glLogoGlow {
+          0%, 100% {
+            filter:
+              drop-shadow(0 0 14px rgba(255,122,28,0.55))
+              drop-shadow(0 0 40px rgba(255,100,0,0.32))
+              drop-shadow(0 0 90px rgba(255,140,50,0.18));
+          }
+          50% {
+            filter:
+              drop-shadow(0 0 22px rgba(255,170,70,0.9))
+              drop-shadow(0 0 60px rgba(255,122,28,0.55))
+              drop-shadow(0 0 140px rgba(255,100,0,0.32));
+          }
+        }
+        .gl-logo:hover {
+          background: linear-gradient(
+            100deg,
+            #ff7a1c 0%,
+            #ff9540 22%,
+            #ffc266 44%,
+            #ffe090 50%,
+            #ffc266 56%,
+            #ff9540 78%,
+            #ff7a1c 100%
+          );
+          background-size: 260% 100%;
+          animation:
+            glLogoGlowBright 1.6s ease-in-out infinite,
+            glShine 1.8s linear infinite;
+          transform: scale(1.035);
+        }
+        @keyframes glLogoGlowBright {
+          0%, 100% {
+            filter:
+              brightness(1.5) saturate(1.25)
+              drop-shadow(0 0 24px rgba(255,160,60,1))
+              drop-shadow(0 0 60px rgba(255,120,20,0.8))
+              drop-shadow(0 0 140px rgba(255,100,0,0.55))
+              drop-shadow(0 0 240px rgba(255,80,0,0.3));
+          }
+          50% {
+            filter:
+              brightness(1.85) saturate(1.4)
+              drop-shadow(0 0 38px rgba(255,200,100,1))
+              drop-shadow(0 0 95px rgba(255,150,40,0.95))
+              drop-shadow(0 0 200px rgba(255,110,10,0.7))
+              drop-shadow(0 0 360px rgba(255,90,0,0.45));
+          }
+        }
+        @keyframes glShine {
+          0%   { background-position: 160% 50%; }
+          100% { background-position: -60% 50%; }
+        }
+        .gl-aura {
+          position: absolute;
+          inset: -200px -10vw;
+          background: radial-gradient(
+            ellipse 55% 65% at center,
+            rgba(255,150,60,0.38) 0%,
+            rgba(255,120,30,0.22) 18%,
+            rgba(255,100,10,0.12) 38%,
+            rgba(255,90,0,0.05) 58%,
+            rgba(255,90,0,0.015) 75%,
+            transparent 92%
+          );
+          filter: blur(60px);
+          pointer-events: none;
+          z-index: 0;
+        }
       `}</style>
 
       {/* ── NAV ─────────────────────────────────────────────────────── */}
@@ -710,11 +889,11 @@ export default function Portfolio() {
               </h2>
             </div>
 
-            <h1 className="font-display fade-up delay-2"
-              style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", lineHeight: 0.92, color: "var(--cream)", marginBottom: 8, marginTop: 10 }}>
-              <span className="glow-text">BUILDING</span><br />
-              <span className="gold-text glow-text-gold">TECHNOLOGY</span><br />
-              <span className="glow-text">THAT MATTERS</span>
+            <h1 className="font-hero fade-up delay-2"
+              style={{ fontSize: "clamp(3rem, 8.5vw, 7.5rem)", lineHeight: 1, color: "var(--cream)", marginBottom: 8, marginTop: 10 }}>
+              <span className="glow-text">Building</span><br />
+              <span className="gold-text glow-text-gold">technology</span><br />
+              <span className="glow-text">that matters.</span>
             </h1>
 
             <p className="font-body fade-up delay-3"
@@ -727,8 +906,13 @@ export default function Portfolio() {
 
             <div className="fade-up delay-4" style={{ display: "flex", gap: 24, marginTop: 44, flexWrap: "wrap", alignItems: "center" }}>
               <button onClick={() => scrollTo("projects")} className="btn-gold">View My Work</button>
+              <a href="https://www.linkedin.com/in/kailash-shankar" target="_blank" rel="noreferrer"
+                style={{ color: "var(--gold)", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }}
+                className="anim-underline">
+                LinkedIn ↗
+              </a>
               <a href="mailto:kailashshankar@ufl.edu"
-                style={{ color: "var(--gold)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }}
+                style={{ color: "var(--gold)", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }}
                 className="anim-underline">
                 kailashshankar@ufl.edu →
               </a>
@@ -757,6 +941,31 @@ export default function Portfolio() {
           ))}
         </div>
       </div>
+
+      {/* ── NEXT UP ─────────────────────────────────────────────────── */}
+      <section className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
+            <span className="section-label">Next Up</span>
+            <div className="gold-divider" style={{ flex: 1 }} />
+          </div>
+
+          <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 0" }}>
+            <div className="gl-aura" />
+            <div className="gl-logo" style={{ position: "relative", zIndex: 1 }} />
+            <div style={{ position: "relative", zIndex: 1, marginTop: 48, textAlign: "center" }}>
+              <h3 className="font-serif" style={{ color: "var(--cream)", fontSize: "clamp(1.7rem, 3vw, 2.4rem)", fontStyle: "italic", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.005em" }}>
+                AI Product Builder Intern
+              </h3>
+              <p className="font-body" style={{ color: "#ffb15a", fontStyle: "italic", fontSize: "1.18rem", marginTop: 12, letterSpacing: "0.04em" }}>
+                Summer 2026
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="gold-divider" />
 
       {/* ── EXPERIENCE ──────────────────────────────────────────────── */}
       <section id="experience" className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
@@ -849,39 +1058,50 @@ export default function Portfolio() {
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
 
-          <div className="impact-card" style={{ padding: "0", marginBottom: 24, overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            <div style={{ padding: "56px 48px", borderRight: "1px solid var(--border)", position: "relative" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg, var(--gold), var(--amber))" }} />
-              <p className="font-body" style={{ color: "var(--gold-light)", fontStyle: "italic", fontSize: "0.98rem", marginBottom: 16 }}>Jan 2025 – Present  ·  Featured</p>
-              <h2 className="font-display" style={{ fontSize: "3.8rem", color: "var(--cream)", lineHeight: 1, marginBottom: 8 }}>LINGUA</h2>
-              <p className="font-serif" style={{ color: "var(--gold)", fontSize: "1.15rem", fontStyle: "italic", marginBottom: 24 }}>AI Language Learning Platform</p>
-              <p className="font-body" style={{ fontSize: "1.1rem", lineHeight: 1.75, color: "var(--muted)", marginBottom: 28 }}>
-                LINGUA is the most powerful LMS ever created for foreign language education. Teachers spend hours upon hours creating and grading assignments - a burdensome task when you have 100+ students. Lingua reduces this to just seconds, allowing teachers to create high-quality reading, writing, listening, and speaking assignments tailored to their curriculum with just a few clicks, auto-graded by AI against their own rubrics and instructions, with personalized feedback for each student. 
-              </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
-                {["React", "Next.js", "Supabase", "Gemini Live & TTS", "Tailwind", "PostgreSQL", "RBAC", "REST API"].map((t) => (
-                  <span key={t} className="tag">{t}</span>
-                ))}
+          <div className="impact-card" style={{ padding: 0, marginBottom: 24, overflow: "hidden", position: "relative" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg, var(--gold), var(--amber))", zIndex: 4 }} />
+
+            <LinguaCarousel
+              images={["lingua_0.png", "lingua_1.png", "lingua_2.png", "lingua_3.png", "lingua_4.png", "lingua_5.png", "lingua_6.png", "lingua_7.png"]}
+            />
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              <div style={{ padding: "48px", borderRight: "1px solid var(--border)" }}>
+                <p className="font-body" style={{ color: "var(--gold-light)", fontStyle: "italic", fontSize: "0.98rem", marginBottom: 16 }}>Jan 2026 – Present</p>
+                <h2 style={{ marginBottom: 8, lineHeight: 1 }}>
+                  <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="lingua-link font-display" style={{ fontSize: "3.8rem", lineHeight: 1 }}>
+                    LINGUA
+                  </a>
+                </h2>
+                <p className="font-serif" style={{ color: "var(--gold)", fontSize: "1.15rem", fontStyle: "italic", marginBottom: 24 }}>AI Language Learning Platform</p>
+                <p className="font-body" style={{ fontSize: "1.1rem", lineHeight: 1.75, color: "var(--muted)", marginBottom: 28 }}>
+                  Lingua is the most powerful LMS ever created for foreign language education. Teachers spend hours upon hours creating and grading assignments - a burdensome task when you have 100+ students. Lingua reduces this to just seconds, allowing teachers to create high-quality reading, writing, listening, and speaking assignments tailored to their curriculum with just a few clicks, auto-graded by AI against their own rubrics and instructions, with personalized feedback for each student.
+                </p>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
+                  {["React", "Next.js", "Supabase", "Gemini Live & TTS", "Tailwind", "PostgreSQL", "RBAC", "REST API"].map((t) => (
+                    <span key={t} className="tag">{t}</span>
+                  ))}
+                </div>
+                <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="btn-gold">View at linguaclassroom.com →</a>
               </div>
-              <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="btn-gold">View at linguaclassroom.com →</a>
-            </div>
-            <div style={{ padding: "56px 48px", background: "var(--bg3)" }}>
-              <p className="section-label" style={{ marginBottom: 28 }}>Platform Features</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-                {[
-                  { icon: "", title: "AI Conversation Assignments", body: "Students converse face-to-face with distinct AI characters based on in-class topics, enabling contextually rich, authentic language practice." },
-                  { icon: "", title: "Reading & Listening Assignments", body: "Teachers create authentic passages, audios, and comprehension questions tailored to their curriculum in just seconds. Students complete them in real-time with instant scoring feedback." },
-                  { icon: "", title: "Writing Assignments", body: "Prompt-based writing tasks, submitted through the platform text editoror handwritten images, are auto-graded by AI against teacher-defined rubrics, and marked up with detailed personalized feedback." },
-                  { icon: "", title: "Oral Examinations", body: "Students participate in presentations, conversations and discussions with the AI that are auto-graded with comprehensive feedback." },
-                ].map((f) => (
-                  <div key={f.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                    <div style={{ fontSize: "1.3rem", marginTop: 2 }}>{f.icon}</div>
-                    <div>
-                      <div className="font-mono" style={{ fontSize: "0.75rem", color: "var(--gold)", letterSpacing: "0.06em", marginBottom: 4 }}>{f.title}</div>
-                      <p className="font-body" style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.6 }}>{f.body}</p>
+              <div style={{ padding: "48px", background: "var(--bg3)" }}>
+                <p className="section-label" style={{ marginBottom: 28 }}>Platform Features</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+                  {[
+                    { Icon: MessageCircle, title: "AI Conversation Assignments", body: "Students converse face-to-face with distinct AI characters based on in-class topics, enabling contextually rich, authentic language practice." },
+                    { Icon: BookOpen, title: "Reading & Listening Assignments", body: "Teachers create authentic passages, audios, and comprehension questions tailored to their curriculum in just seconds. Students complete them in real-time with instant scoring feedback." },
+                    { Icon: Pencil, title: "Writing Assignments", body: "Prompt-based writing tasks, submitted through the platform text editor or handwritten images, are auto-graded by AI against teacher-defined rubrics, and marked up with detailed personalized feedback." },
+                    { Icon: Mic, title: "Oral Examinations", body: "Students participate in presentations, conversations and discussions with the AI that are auto-graded with comprehensive feedback." },
+                  ].map((f) => (
+                    <div key={f.title} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                      <f.Icon size={20} strokeWidth={1.6} style={{ color: "var(--gold-light)", marginTop: 4, flexShrink: 0 }} />
+                      <div>
+                        <div className="font-serif" style={{ fontSize: "1.02rem", color: "var(--cream)", fontStyle: "italic", marginBottom: 4, letterSpacing: "-0.005em" }}>{f.title}</div>
+                        <p className="font-body" style={{ fontSize: "0.98rem", color: "var(--muted)", lineHeight: 1.6 }}>{f.body}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -925,7 +1145,7 @@ export default function Portfolio() {
             {[
               { cat: "Languages",  items: ["Python", "C/C++", "JavaScript", "HTML/CSS", "MATLAB"] },
               { cat: "Frameworks", items: ["React", "Next.js", "Node.js", "FastAPI", "Tailwind CSS"] },
-              { cat: "AI/ML",      items: ["Gemini 2.0", "RAG / ChromaDB", "OLMo-2", "Hugging Face"] },
+              { cat: "AI/ML",      items: ["Gemini Flash, Live, TTS", "RAG / ChromaDB", "OLMo-2", "Hugging Face"] },
               { cat: "Databases",  items: ["PostgreSQL", "MongoDB", "Supabase", "NeonDB"] },
               { cat: "Tools",      items: ["Docker", "Git", "Linux", "Prisma", "Inngest", "HiPerGator"] },
             ].map((cat) => (
@@ -1016,9 +1236,9 @@ export default function Portfolio() {
         <div className="glow-orb" style={{ width: 600, height: 600, background: "rgba(201,168,76,0.04)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", padding: "0 48px", textAlign: "center" }}>
           <span className="section-label" style={{ display: "block", marginBottom: 20 }}>Let's Build Something</span>
-          <h2 className="font-display" style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--cream)", lineHeight: 0.95, marginBottom: 32 }}>
-            <span className="glow-text">REAL PROBLEMS.</span><br />
-            <span className="gold-text glow-text-gold">REAL SOLUTIONS.</span>
+          <h2 className="font-hero" style={{ fontSize: "clamp(2.6rem, 6vw, 5.2rem)", color: "var(--cream)", lineHeight: 1.02, marginBottom: 32 }}>
+            <span className="glow-text">Real problems.</span><br />
+            <span className="gold-text glow-text-gold">Real solutions.</span>
           </h2>
           <p className="font-body" style={{ fontSize: "1.2rem", color: "var(--muted)", lineHeight: 1.7, marginBottom: 48, fontStyle: "italic" }}>
             I'm looking for opportunities where I can keep doing what I love — building technology that has a genuine impact on real people's lives.
@@ -1035,6 +1255,51 @@ export default function Portfolio() {
         </div>
       </section>
     </>
+  );
+}
+
+// ── LinguaCarousel ──────────────────────────────────────────────────────────
+
+function LinguaCarousel({ images }: { images: string[] }) {
+  const [idx, setIdx] = useState(0);
+  const total = images.length;
+  const next = () => setIdx((i) => (i + 1) % total);
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+
+  return (
+    <div className="carousel">
+      <div
+        className="carousel-track"
+        style={{
+          width: `${total * 100}%`,
+          transform: `translateX(-${(idx * 100) / total}%)`,
+        }}
+      >
+        {images.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt={`Lingua screenshot ${i + 1}`}
+            className="carousel-slide"
+            style={{ width: `${100 / total}%` }}
+          />
+        ))}
+      </div>
+
+      <button onClick={prev} aria-label="Previous slide" className="carousel-arrow" style={{ left: 18 }}>‹</button>
+      <button onClick={next} aria-label="Next slide" className="carousel-arrow" style={{ right: 18 }}>›</button>
+
+      <div className="carousel-dots">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`carousel-dot ${i === idx ? "active" : ""}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
