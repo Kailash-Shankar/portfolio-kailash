@@ -449,7 +449,7 @@ export default function Portfolio() {
         }
 
         .glow-text {
-          transition: text-shadow 0.08s ease, filter 0.08s ease;
+          transition: none;
           cursor: default;
         }
         .glow-text:hover {
@@ -460,7 +460,7 @@ export default function Portfolio() {
           filter: brightness(1.25);
         }
         .glow-text-gold {
-          transition: filter 0.08s ease;
+          transition: none;
           cursor: default;
         }
         .glow-text-gold:hover {
@@ -468,7 +468,7 @@ export default function Portfolio() {
         }
 
         .glow-name {
-          transition: filter 0.08s ease;
+          transition: none;
           cursor: default;
           display: block;
           width: fit-content;
@@ -490,6 +490,83 @@ export default function Portfolio() {
         @media (min-width: 851px) {
           .mobile-menu { display: none; }
           .hamburger { display: none; }
+        }
+
+        /* ── Organic / natural overrides for middle sections ── */
+        .organic .section-label {
+          font-family: 'Crimson Pro', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 1.15rem;
+          letter-spacing: 0;
+          text-transform: none;
+          color: var(--gold-light);
+        }
+        .organic .section-label::before {
+          content: '— ';
+          color: var(--gold);
+          opacity: 0.7;
+        }
+        .organic .gold-divider {
+          background: linear-gradient(90deg, transparent, rgba(201,168,76,0.28), transparent);
+          opacity: 0.85;
+        }
+        .organic .impact-card {
+          border-radius: 22px;
+          border: 1px solid rgba(201,168,76,0.14);
+          background: var(--bg2);
+        }
+        .organic .impact-card:hover {
+          border-color: rgba(201,168,76,0.5);
+          transform: translateY(-3px);
+          box-shadow: 0 14px 50px rgba(201,168,76,0.10);
+        }
+        .organic .tag {
+          font-family: 'Crimson Pro', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 0.92rem;
+          padding: 4px 14px;
+          border-radius: 999px;
+          letter-spacing: 0;
+          text-transform: none;
+          color: var(--gold-light);
+          background: rgba(201,168,76,0.07);
+          border: 1px solid rgba(201,168,76,0.2);
+        }
+        .organic .impact-badge {
+          font-family: 'Crimson Pro', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 0.92rem;
+          padding: 4px 16px;
+          border-radius: 999px;
+          letter-spacing: 0;
+          text-transform: none;
+          background: rgba(201,168,76,0.09);
+          border: 1px solid rgba(201,168,76,0.25);
+          color: var(--gold-light);
+        }
+        .organic .font-mono {
+          font-family: 'Crimson Pro', Georgia, serif !important;
+          font-style: italic;
+          letter-spacing: 0 !important;
+          text-transform: none !important;
+        }
+        .organic .font-display {
+          font-family: 'DM Serif Display', Georgia, serif !important;
+          letter-spacing: -0.005em !important;
+          font-weight: 400;
+        }
+        .organic .btn-gold {
+          font-family: 'Crimson Pro', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 1.02rem;
+          letter-spacing: 0;
+          text-transform: none;
+          padding: 11px 28px;
+          border-radius: 999px;
         }
       `}</style>
 
@@ -613,9 +690,7 @@ export default function Portfolio() {
 
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "120px 48px 80px", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 60 }} className="hero-content">
           <div className="hero-text" style={{ flex: 1 }}>
-            <div className="fade-up" style={{ marginBottom: 28 }}>
-              <span className="impact-badge">Open to Opportunities · Summer 2026</span>
-            </div>
+            
 
             <div className="fade-up delay-1" style={{ marginBottom: 4 }}>
               <h2 className="glow-name" style={{
@@ -684,7 +759,7 @@ export default function Portfolio() {
       </div>
 
       {/* ── EXPERIENCE ──────────────────────────────────────────────── */}
-      <section id="experience" style={{ padding: "100px 0", background: "var(--bg)" }}>
+      <section id="experience" className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
             <span className="section-label">Experience</span>
@@ -697,7 +772,6 @@ export default function Portfolio() {
               location="Cape Town, South Africa"
               role="Software Engineering Intern"
               tags={["MERN Stack", "React", "Leaflet", "REST API", "Node.js"]}
-              impact="30+ settlements connected · 100+ MAU"
               emoji=""
               description="Working with a non-profit in Cape Town, I built an interactive mapping application giving residents of underprivileged neighborhoods direct access to local government contacts and a channel to report critical housing issues — from evictions to power outages and water shortages. Every pin on that map represents a family that now has a voice. Built on a MERN stack with a custom REST API, the platform serves 100+ monthly active users across 30+ informal settlements in the Western Cape."
             />
@@ -707,7 +781,6 @@ export default function Portfolio() {
               location="Gainesville, FL"
               role="Machine Learning Engineer"
               tags={["Next.js", "FastAPI", "Gemini 2.0", "RAG", "ChromaDB"]}
-              impact="95% accuracy · 30% ↓ hallucinations · <500ms retrieval"
               emoji=""
               description="Built an AI Teaching Assistant that deploys course-specific chatbot instances for 50+ students, with Gemini 2.0 orchestration and custom guardrails that cut hallucination rates by 30% while maintaining academic integrity. Engineered a RAG pipeline with ChromaDB achieving sub-500ms semantic retrieval across 1,000+ academic documents."
             />
@@ -718,46 +791,49 @@ export default function Portfolio() {
       <div className="gold-divider" />
 
       {/* ── RESEARCH ────────────────────────────────────────────────── */}
-      <section id="research" style={{ padding: "100px 0", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
+      <section id="research" className="organic" style={{ padding: "120px 0", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 48px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 56 }}>
             <span className="section-label">Research</span>
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
-            <div className="impact-card" style={{ padding: "48px", gridColumn: "1 / -1", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: 0, right: 0, width: 200, height: 200, background: "radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)" }} />
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 20 }}>
-                <div>
-                  <span className="impact-badge" style={{ marginBottom: 16, display: "inline-block" }}>Aug 2025 – Present</span>
-                  <h3 className="font-serif" style={{ fontSize: "1.9rem", color: "var(--cream)", marginBottom: 8 }}>Computational Linguistics Lab</h3>
-                  <p className="font-mono" style={{ color: "var(--gold)", fontSize: "0.78rem", letterSpacing: "0.08em" }}>University of Florida · Advisor: Dr. Zoey Liu</p>
-                </div>
-                <div style={{ textAlign: "right" }} />
-              </div>
-              <div className="gold-divider" style={{ margin: "32px 0" }} />
-              <p className="font-body" style={{ fontSize: "1.15rem", lineHeight: 1.75, color: "var(--cream)", marginBottom: 24, maxWidth: 760 }}>
-                Language shapes how we see the world — yet most of today's AI speaks only a handful of them fluently. Working with Dr. Zoey Liu, I investigate how <em style={{ color: "var(--gold-light)" }}>data partitioning strategies on LLM training data</em> impact model generalization across the world's linguistic diversity, with a particular focus on low-resource languages that are systematically underrepresented in modern AI.
-              </p>
-              <p className="font-body" style={{ fontSize: "1.15rem", lineHeight: 1.75, color: "var(--muted)", maxWidth: 760 }}>
-                My current work quantifies a fundamental trade-off: <strong style={{ color: "var(--cream)" }}>how much does annotation quality matter when data is scarce?</strong> By systematically injecting controlled annotation noise into training sets and benchmarking OLMo-2 across 2,000 languages on UF's HiPerGator supercomputer, I'm building an empirical map of where AI breaks down — and how to fix it.
-              </p>
-              <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
-                {["Zero-Shot Transfer", "Cross-Lingual NLP", "Data Partitioning", "OLMo-2 (1B)", "HiPerGator HPC", "Low-Resource Languages", "Annotation Noise"].map((t) => (
-                  <span key={t} className="tag">{t}</span>
-                ))}
-              </div>
-            </div>
+
+          <p className="font-body" style={{ fontSize: "0.98rem", color: "var(--gold-light)", fontStyle: "italic", marginBottom: 14, letterSpacing: "0.01em" }}>
+            Aug 2025 – Present  ·  University of Florida  ·  with Dr. Zoey Liu
+          </p>
+
+          <h3 className="font-serif" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "var(--cream)", lineHeight: 1.15, marginBottom: 36, fontWeight: 400, letterSpacing: "-0.01em" }}>
+            Computational Linguistics Lab
+          </h3>
+
+          <p className="font-body" style={{ fontSize: "1.22rem", lineHeight: 1.8, color: "var(--cream)", marginBottom: 28 }}>
+            Language shapes how we see the world — yet most of today&rsquo;s AI speaks only a handful of them fluently. Working with Dr. Zoey Liu, I investigate how <em style={{ color: "var(--gold-light)" }}>data partitioning strategies on LLM training data</em> impact model generalization across the world&rsquo;s linguistic diversity, with a particular focus on low-resource languages that are systematically underrepresented in modern AI.
+          </p>
+
+          <p className="font-body" style={{ fontSize: "1.22rem", lineHeight: 1.8, color: "var(--muted)", marginBottom: 64 }}>
+            My current work quantifies a fundamental trade-off: <span style={{ color: "var(--cream)" }}>how much does annotation quality matter when data is scarce?</span> By systematically injecting controlled annotation noise into training sets and benchmarking OLMo-2 across 2,000 languages on UF&rsquo;s HiPerGator supercomputer, I&rsquo;m building an empirical map of where AI breaks down — and how to fix it.
+          </p>
+
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 56 }}>
+            <span style={{ color: "var(--gold)", opacity: 0.5, fontSize: "1.4rem", letterSpacing: "0.6em" }}>✦ ✦ ✦</span>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 48, marginBottom: 64 }}>
             {[
-              { icon: "", title: "Quality vs. Quantity", body: "Systematically modeling the trade-off between dataset scale and annotation fidelity — a fundamental question with outsized implications for languages where data is precious." },
-              { icon: "", title: "2,000 Languages Tested", body: "Benchmarking across a typologically diverse language set to understand how massive multilingual scale affects cross-linguistic transfer beyond high-resource language clusters." },
-              { icon: "", title: "Morphological Segmentation", body: "Investigating cross-lingual partitioning of morphologically segmented data across language families to improve zero-shot performance for understudied tongues." },
+              { title: "Quality vs. Quantity", body: "Modeling the trade-off between dataset scale and annotation fidelity — a question with outsized implications for languages where data is precious." },
+              { title: "2,000 Languages", body: "Benchmarking across a typologically diverse language set to understand how multilingual scale affects cross-linguistic transfer beyond high-resource clusters." },
+              { title: "Morphological Segmentation", body: "Investigating cross-lingual partitioning of morphologically segmented data across language families to improve zero-shot performance for understudied tongues." },
             ].map((c) => (
-              <div key={c.title} className="impact-card" style={{ padding: "32px", background: "var(--bg3)" }}>
-                <div style={{ fontSize: "1.8rem", marginBottom: 14 }}>{c.icon}</div>
-                <h4 className="font-serif" style={{ fontSize: "1.2rem", color: "var(--cream)", marginBottom: 10 }}>{c.title}</h4>
-                <p className="font-body" style={{ fontSize: "1rem", color: "var(--muted)", lineHeight: 1.65 }}>{c.body}</p>
+              <div key={c.title}>
+                <h4 className="font-serif" style={{ fontSize: "1.25rem", color: "var(--gold-light)", marginBottom: 12, fontStyle: "italic", fontWeight: 400, letterSpacing: "0.01em" }}>{c.title}</h4>
+                <p className="font-body" style={{ fontSize: "1.02rem", color: "var(--muted)", lineHeight: 1.7 }}>{c.body}</p>
               </div>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+            {["Zero-Shot Transfer", "Cross-Lingual NLP", "Data Partitioning", "OLMo-2 (1B)", "HiPerGator HPC", "Low-Resource Languages", "Annotation Noise"].map((t) => (
+              <span key={t} className="tag">{t}</span>
             ))}
           </div>
         </div>
@@ -766,7 +842,7 @@ export default function Portfolio() {
       <div className="gold-divider" />
 
       {/* ── PROJECTS ────────────────────────────────────────────────── */}
-      <section id="projects" style={{ padding: "100px 0", background: "var(--bg)" }}>
+      <section id="projects" className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
             <span className="section-label">Projects</span>
@@ -776,27 +852,27 @@ export default function Portfolio() {
           <div className="impact-card" style={{ padding: "0", marginBottom: 24, overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <div style={{ padding: "56px 48px", borderRight: "1px solid var(--border)", position: "relative" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg, var(--gold), var(--amber))" }} />
-              <span className="impact-badge" style={{ marginBottom: 20, display: "inline-block" }}>Jan 2025 – Present · Featured</span>
+              <p className="font-body" style={{ color: "var(--gold-light)", fontStyle: "italic", fontSize: "0.98rem", marginBottom: 16 }}>Jan 2025 – Present  ·  Featured</p>
               <h2 className="font-display" style={{ fontSize: "3.8rem", color: "var(--cream)", lineHeight: 1, marginBottom: 8 }}>LINGUA</h2>
               <p className="font-serif" style={{ color: "var(--gold)", fontSize: "1.15rem", fontStyle: "italic", marginBottom: 24 }}>AI Language Learning Platform</p>
               <p className="font-body" style={{ fontSize: "1.1rem", lineHeight: 1.75, color: "var(--muted)", marginBottom: 28 }}>
-                Students get just one hour of language class a day — nowhere near enough to build real-world fluency. Lingua changes that. An AI-powered platform where high schoolers practice authentic conversations with distinct AI characters, receive real-time feedback on grammar and vocabulary, and teachers get holistic insights into what their entire class is struggling with.
+                LINGUA is the most powerful LMS ever created for foreign language education. Teachers spend hours upon hours creating and grading assignments - a burdensome task when you have 100+ students. Lingua reduces this to just seconds, allowing teachers to create high-quality reading, writing, listening, and speaking assignments tailored to their curriculum with just a few clicks, auto-graded by AI against their own rubrics and instructions, with personalized feedback for each student. 
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
-                {["React", "Next.js", "Supabase", "Gemini Flash", "Tailwind", "PostgreSQL", "RBAC", "REST API"].map((t) => (
+                {["React", "Next.js", "Supabase", "Gemini Live & TTS", "Tailwind", "PostgreSQL", "RBAC", "REST API"].map((t) => (
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
-              <a href="https://github.com/Kailash-Shankar" target="_blank" rel="noreferrer" className="btn-gold">View on GitHub →</a>
+              <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="btn-gold">View at linguaclassroom.com →</a>
             </div>
             <div style={{ padding: "56px 48px", background: "var(--bg3)" }}>
               <p className="section-label" style={{ marginBottom: 28 }}>Platform Features</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
                 {[
-                  { icon: "", title: "AI Conversation Characters", body: "Each character has a distinct personality and life story, enabling contextually rich, authentic language practice." },
-                  { icon: "", title: "Teacher Assignment Studio", body: "Teachers define topic, theme, depth, key vocabulary, and grammar tenses — then let students take it from there." },
-                  { icon: "", title: "Real-Time Performance Insights", body: "Multi-dimensional AI feedback after every conversation — what you did well, what to improve, tracked over time." },
-                  { icon: "", title: "Secure Role-Based Access", body: "Supabase Auth + Row Level Security cleanly separates student and teacher experiences with zero data bleed." },
+                  { icon: "", title: "AI Conversation Assignments", body: "Students converse face-to-face with distinct AI characters based on in-class topics, enabling contextually rich, authentic language practice." },
+                  { icon: "", title: "Reading & Listening Assignments", body: "Teachers create authentic passages, audios, and comprehension questions tailored to their curriculum in just seconds. Students complete them in real-time with instant scoring feedback." },
+                  { icon: "", title: "Writing Assignments", body: "Prompt-based writing tasks, submitted through the platform text editoror handwritten images, are auto-graded by AI against teacher-defined rubrics, and marked up with detailed personalized feedback." },
+                  { icon: "", title: "Oral Examinations", body: "Students participate in presentations, conversations and discussions with the AI that are auto-graded with comprehensive feedback." },
                 ].map((f) => (
                   <div key={f.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                     <div style={{ fontSize: "1.3rem", marginTop: 2 }}>{f.icon}</div>
@@ -839,7 +915,7 @@ export default function Portfolio() {
       <div className="gold-divider" />
 
       {/* ── SKILLS ──────────────────────────────────────────────────── */}
-      <section style={{ padding: "80px 0", background: "var(--bg2)" }}>
+      <section className="organic" style={{ padding: "80px 0", background: "var(--bg2)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 48 }}>
             <span className="section-label">Technical Arsenal</span>
@@ -945,7 +1021,7 @@ export default function Portfolio() {
             <span className="gold-text glow-text-gold">REAL SOLUTIONS.</span>
           </h2>
           <p className="font-body" style={{ fontSize: "1.2rem", color: "var(--muted)", lineHeight: 1.7, marginBottom: 48, fontStyle: "italic" }}>
-            I'm looking for opportunities where I can keep doing what I love — building technology that has a genuine impact on real people's lives. Whether that's a full-time role, a research collaboration, or an internship for Summer 2026, let's talk.
+            I'm looking for opportunities where I can keep doing what I love — building technology that has a genuine impact on real people's lives.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <a href="mailto:kailashshankar@ufl.edu" className="btn-gold">kailashshankar@ufl.edu</a>
@@ -964,13 +1040,12 @@ export default function Portfolio() {
 
 // ── ExperienceBlock ──────────────────────────────────────────────────────────
 
-function ExperienceBlock({ date, org, location, role, tags, impact, emoji, description }: {
+function ExperienceBlock({ date, org, location, role, tags, emoji, description }: {
   date: string; org: string; location: string; role: string;
-  tags: string[]; impact: string; emoji: string; description: string;
+  tags: string[]; emoji: string; description: string;
 }) {
-  const [open, setOpen] = useState(false);
   return (
-    <div className="impact-card" style={{ padding: "40px 48px", cursor: "pointer", marginBottom: 2 }} onClick={() => setOpen(!open)}>
+    <div className="impact-card" style={{ padding: "40px 48px", marginBottom: 2 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
         <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
           <div style={{ fontSize: "2rem", marginTop: 4 }}>{emoji}</div>
@@ -983,21 +1058,15 @@ function ExperienceBlock({ date, org, location, role, tags, impact, emoji, descr
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <div className="font-mono" style={{ fontSize: "0.7rem", color: "var(--muted)", marginBottom: 6 }}>{date}</div>
-          <span className="impact-badge">{impact}</span>
+          <div className="font-mono" style={{ fontSize: "0.7rem", color: "var(--muted)" }}>{date}</div>
         </div>
       </div>
-      {open && (
-        <div style={{ marginTop: 28 }}>
-          <div className="gold-divider" style={{ marginBottom: 24 }} />
-          <p className="font-body" style={{ fontSize: "1.1rem", lineHeight: 1.78, color: "var(--muted)", marginBottom: 24 }}>{description}</p>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {tags.map((t) => <span key={t} className="tag">{t}</span>)}
-          </div>
+      <div style={{ marginTop: 28 }}>
+        <div className="gold-divider" style={{ marginBottom: 24 }} />
+        <p className="font-body" style={{ fontSize: "1.1rem", lineHeight: 1.78, color: "var(--muted)", marginBottom: 24 }}>{description}</p>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {tags.map((t) => <span key={t} className="tag">{t}</span>)}
         </div>
-      )}
-      <div className="font-mono" style={{ color: "var(--muted)", fontSize: "0.68rem", marginTop: 16, letterSpacing: "0.08em" }}>
-        {open ? "▲ collapse" : "▼ read more"}
       </div>
     </div>
   );
