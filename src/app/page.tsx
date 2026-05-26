@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessageCircle, BookOpen, Pencil, Mic } from "lucide-react";
+import { MessageCircle, BookOpen, Pencil, Mic, Menu, X } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const Space3D = dynamic(() => import("./Space3D"), { ssr: false });
 
 const SECTIONS = ["about", "experience", "research", "projects", "contact"];
 
@@ -19,7 +22,16 @@ export default function Portfolio() {
   const [scrollY, setScrollY] = useState(0);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [typed, setTyped] = useState("");
+  const [show3D, setShow3D] = useState(false);
+  const [showPromo, setShowPromo] = useState(false);
+  const [promoDismissed, setPromoDismissed] = useState(false);
   const fullTitle = "Software Engineer & Researcher";
+
+  useEffect(() => {
+    if (promoDismissed) return;
+    const t = setTimeout(() => setShowPromo(true), 800);
+    return () => clearTimeout(t);
+  }, [promoDismissed]);
 
   useEffect(() => {
     let i = 0;
@@ -122,6 +134,16 @@ export default function Portfolio() {
     { top: "35%", right: "8%",  size: 16, dur: "6s",    delay: "5.0s", anim: "starPulse"  },
   ];
 
+  const launch3D = () => {
+    setShow3D(true);
+    setShowPromo(false);
+    setPromoDismissed(true);
+  };
+  const dismissPromo = () => {
+    setShowPromo(false);
+    setPromoDismissed(true);
+  };
+
   return (
     <>
       <style>{`
@@ -190,6 +212,139 @@ export default function Portfolio() {
           transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .lingua-link:hover::after { width: 100%; }
+
+        /* ── 3D promo popup ── */
+        @keyframes promoIn {
+          from { opacity: 0; transform: translate(-50%, -24px); }
+          to   { opacity: 1; transform: translate(-50%, 0); }
+        }
+        @keyframes promoOut {
+          from { opacity: 1; transform: translate(-50%, 0); }
+          to   { opacity: 0; transform: translate(-50%, -24px); }
+        }
+        .promo-3d {
+          position: fixed;
+          top: 28px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 500;
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          padding: 14px 18px 14px 24px;
+          background: rgba(20, 18, 12, 0.78);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-radius: 999px;
+          box-shadow:
+            0 12px 40px rgba(0,0,0,0.55),
+            0 0 0 1px rgba(255,255,255,0.04),
+            0 0 60px rgba(201,168,76,0.18);
+          animation: promoIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .promo-3d.closing {
+          animation: promoOut 0.35s cubic-bezier(0.4, 0, 1, 1) both;
+        }
+        .promo-3d-text {
+          font-family: 'Crimson Pro', Georgia, serif;
+          font-style: italic;
+          font-size: 1.08rem;
+          color: var(--cream);
+          letter-spacing: 0.005em;
+          white-space: nowrap;
+        }
+        .promo-3d-sparkle {
+          display: inline-block;
+          background: linear-gradient(135deg, #e8c96e, #ffe39a, #c9a84c);
+          -webkit-background-clip: text;
+                  background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: 600;
+        }
+        .promo-3d-btn {
+          font-family: 'DM Sans', system-ui, sans-serif;
+          font-size: 0.86rem;
+          font-weight: 500;
+          letter-spacing: 0.06em;
+          color: #1a1208;
+          background: linear-gradient(135deg, #ffe39a 0%, #e8c96e 45%, #c9a84c 100%);
+          border: none;
+          padding: 9px 22px;
+          border-radius: 999px;
+          cursor: pointer;
+          transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+          box-shadow: 0 4px 16px rgba(201,168,76,0.35);
+          white-space: nowrap;
+        }
+        .promo-3d-btn:hover {
+          transform: scale(1.05);
+          filter: brightness(1.08);
+          box-shadow: 0 6px 24px rgba(232,201,110,0.55), 0 0 28px rgba(255,227,154,0.4);
+        }
+        .promo-3d-close {
+          background: none;
+          border: none;
+          color: var(--muted);
+          font-size: 1.05rem;
+          line-height: 1;
+          cursor: pointer;
+          padding: 4px 6px;
+          border-radius: 999px;
+          transition: color 0.2s ease, background 0.2s ease;
+        }
+        .promo-3d-close:hover {
+          color: var(--cream);
+          background: rgba(245,240,232,0.08);
+        }
+        @media (max-width: 600px) {
+          .promo-3d { gap: 12px; padding: 12px 14px 12px 18px; max-width: calc(100vw - 20px); }
+          .promo-3d-text { font-size: 0.95rem; white-space: normal; }
+          .promo-3d-btn { font-size: 0.78rem; padding: 8px 16px; }
+        }
+
+        /* ── 'View in 3D' nav button ── */
+        @keyframes nav3dPulse {
+          0%, 100% {
+            box-shadow:
+              0 2px 12px rgba(201,168,76,0.35),
+              0 0 0 0 rgba(255,227,154,0.0);
+          }
+          50% {
+            box-shadow:
+              0 4px 18px rgba(232,201,110,0.55),
+              0 0 22px rgba(255,227,154,0.5);
+          }
+        }
+        .btn-3d-nav {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          font-family: 'DM Sans', system-ui, sans-serif;
+          font-size: 0.78rem;
+          font-weight: 500;
+          letter-spacing: 0.06em;
+          color: #1a1208;
+          background: linear-gradient(135deg, #ffe39a 0%, #e8c96e 45%, #c9a84c 100%);
+          border: none;
+          padding: 7px 16px;
+          border-radius: 999px;
+          cursor: pointer;
+          transition: transform 0.2s ease, filter 0.2s ease;
+          animation: nav3dPulse 3s ease-in-out infinite;
+        }
+        .btn-3d-nav:hover {
+          transform: scale(1.05);
+          filter: brightness(1.08);
+        }
+        .btn-3d-nav .sparkle {
+          background: linear-gradient(135deg, #6b4a14, #3a2810);
+          -webkit-background-clip: text;
+                  background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-size: 0.95em;
+          line-height: 1;
+        }
 
         .grid-lines {
           position: absolute;
@@ -504,18 +659,359 @@ export default function Portfolio() {
             brightness(1.08);
         }
 
-        @media (max-width: 850px) {
-          .desktop-nav { display: none; }
+        /* ── Responsive nav ──
+           - Large (≥1100px): full desktop nav
+           - Medium (900-1099px): condensed desktop nav (still horizontal, tighter)
+           - Small (<900px): hamburger drawer (covers phones AND tablets in portrait)
+        */
+        .hamburger { display: none; }
+        .mobile-menu { display: block; }
+        .mobile-menu-backdrop { display: none; }
+
+        @media (max-width: 1099px) and (min-width: 900px) {
+          .nav-bar { padding: 14px 24px !important; }
+          .desktop-nav { gap: 18px !important; }
+          .desktop-nav .anim-underline { font-size: 0.76rem !important; letter-spacing: 0.08em !important; }
+          .desktop-nav .btn-3d-nav { font-size: 0.72rem; padding: 6px 12px; gap: 5px; }
+          .desktop-nav .btn-gold { font-size: 0.74rem !important; padding: 6px 14px !important; }
+        }
+
+        @media (max-width: 899px) {
+          .desktop-nav { display: none !important; }
+          .hamburger { display: inline-flex !important; align-items: center; justify-content: center; }
+          .nav-bar { padding: 14px 20px !important; }
+          .mobile-menu-backdrop { display: block; }
+        }
+        @media (max-width: 760px) {
           .hero-content { flex-direction: column; text-align: center; }
           .hero-text { order: 1; }
           .hero-image { order: 2; margin-top: 32px; }
         }
-        @media (min-width: 851px) {
+        @media (min-width: 900px) {
           .mobile-menu { display: none; }
-          .hamburger { display: none; }
+        }
+
+        /* Mobile menu slide-in drawer */
+        .mobile-menu {
+          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        }
+        .mobile-menu-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          z-index: 199;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+        .mobile-menu-backdrop.open {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .hamburger-btn {
+          width: 44px;
+          height: 44px;
+          font-size: 1.6rem !important;
+          line-height: 1;
+          border-radius: 12px;
+          transition: background 0.15s ease;
+        }
+        .hamburger-btn:hover, .hamburger-btn:focus-visible {
+          background: rgba(201,168,76,0.10) !important;
+          outline: none;
+        }
+        .mobile-menu-close {
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          width: 42px;
+          height: 42px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid rgba(201,168,76,0.24);
+          border-radius: 999px;
+          background: rgba(10,10,8,0.42);
+          color: var(--gold);
+          cursor: pointer;
+          transition: background 0.15s ease, border-color 0.15s ease;
+        }
+        .mobile-menu-close:hover,
+        .mobile-menu-close:focus-visible {
+          background: rgba(201,168,76,0.10);
+          border-color: rgba(201,168,76,0.45);
+          outline: none;
         }
 
         /* ── Organic / natural overrides for middle sections ── */
+        .section-shell {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 48px;
+        }
+        .section-heading {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .hero-inner {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 120px 48px 80px;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 60px;
+        }
+        .hero-actions,
+        .contact-actions {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .lingua-detail-grid,
+        .project-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        .skills-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 2px;
+        }
+        .project-card,
+        .lingua-copy,
+        .lingua-features {
+          min-width: 0;
+        }
+        .mobile-menu-link {
+          min-height: 44px;
+          width: 100%;
+        }
+
+        @media (max-width: 760px) {
+          html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+          }
+          .nav-bar {
+            padding: 12px 16px !important;
+            background: rgba(10,10,8,0.92) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border-bottom: 1px solid rgba(201,168,76,0.12) !important;
+          }
+          .mobile-menu {
+            width: min(84vw, 320px) !important;
+            padding: 82px 24px 28px !important;
+            overflow-y: auto;
+          }
+          .promo-3d {
+            top: 72px;
+            width: calc(100vw - 24px);
+            border-radius: 20px;
+            align-items: flex-start;
+          }
+          .promo-3d-text {
+            min-width: 0;
+            line-height: 1.25;
+          }
+          #about {
+            min-height: auto !important;
+            padding-top: 76px;
+          }
+          .hero-inner {
+            padding: 40px 22px 56px !important;
+            flex-direction: column;
+            text-align: center;
+            gap: 34px !important;
+          }
+          .hero-text {
+            width: 100%;
+            min-width: 0;
+          }
+          .glow-name {
+            width: 100% !important;
+            font-size: clamp(2.55rem, 14vw, 4.8rem) !important;
+            line-height: 0.98 !important;
+            overflow-wrap: anywhere;
+          }
+          .hero-title {
+            font-size: clamp(2.8rem, 16vw, 5.2rem) !important;
+            line-height: 0.95 !important;
+          }
+          .hero-subtitle {
+            font-size: 1.08rem !important;
+            max-width: 100% !important;
+            margin-top: 22px !important;
+          }
+          .hero-actions {
+            justify-content: center;
+            gap: 14px !important;
+            margin-top: 32px !important;
+          }
+          .hero-actions .btn-gold,
+          .contact-actions .btn-gold {
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            padding: 11px 18px !important;
+            overflow-wrap: anywhere;
+          }
+          .hero-link {
+            font-size: 0.74rem !important;
+            letter-spacing: 0.06em !important;
+          }
+          .hero-image {
+            margin-top: 0 !important;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+          }
+          .profile-img {
+            width: min(72vw, 300px) !important;
+            height: min(72vw, 300px) !important;
+          }
+          .hero-star {
+            opacity: 0.45;
+            transform: scale(0.72);
+            transform-origin: center;
+          }
+          .glow-orb {
+            max-width: 80vw;
+            max-height: 80vw;
+          }
+          .marquee-inner span {
+            font-size: 0.9rem !important;
+          }
+          .section-shell {
+            padding: 0 22px !important;
+          }
+          .organic {
+            padding-top: 68px !important;
+            padding-bottom: 68px !important;
+          }
+          .section-heading {
+            gap: 14px !important;
+            margin-bottom: 38px !important;
+          }
+          .section-label {
+            font-size: 0.95rem !important;
+            white-space: nowrap;
+          }
+          .next-up-body {
+            padding: 28px 0 !important;
+          }
+          .gl-logo {
+            width: min(84vw, 360px) !important;
+          }
+          .research-intro,
+          .research-body {
+            font-size: 1.08rem !important;
+            line-height: 1.72 !important;
+          }
+          .research-stats {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
+          }
+          .lingua-detail-grid,
+          .project-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .lingua-copy,
+          .lingua-features,
+          .project-card,
+          .skill-card,
+          .experience-card {
+            padding: 26px 22px !important;
+          }
+          .lingua-copy {
+            border-right: none !important;
+            border-bottom: 1px solid var(--border);
+          }
+          .lingua-title-link {
+            font-size: clamp(2.4rem, 18vw, 3.3rem) !important;
+          }
+          .carousel {
+            aspect-ratio: 4 / 3;
+          }
+          .carousel-arrow {
+            width: 38px;
+            height: 38px;
+            font-size: 1.35rem;
+          }
+          .carousel-dots {
+            bottom: 12px;
+            gap: 6px;
+            padding: 7px 10px;
+          }
+          .skills-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .contact-section {
+            padding: 82px 0 !important;
+          }
+          .contact-inner {
+            padding: 0 22px !important;
+          }
+          .contact-title {
+            font-size: clamp(2.35rem, 14vw, 4rem) !important;
+          }
+          .contact-copy {
+            font-size: 1.06rem !important;
+            margin-bottom: 34px !important;
+          }
+          .contact-actions {
+            align-items: center;
+            flex-direction: column;
+          }
+          .footer-copy {
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+          }
+          .experience-card-header,
+          .experience-main,
+          .experience-org-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+          }
+          .experience-date {
+            text-align: left !important;
+          }
+          .experience-description {
+            font-size: 1.02rem !important;
+            line-height: 1.7 !important;
+          }
+        }
+
+        @media (max-width: 430px) {
+          .hero-inner {
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+          }
+          .section-shell,
+          .contact-inner {
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+          }
+          .glow-name {
+            font-size: clamp(2.35rem, 13.5vw, 3.5rem) !important;
+          }
+          .hero-title {
+            font-size: clamp(2.45rem, 15vw, 3.9rem) !important;
+          }
+          .btn-gold,
+          .btn-3d-nav {
+            max-width: 100%;
+          }
+          .mobile-menu {
+            width: min(88vw, 300px) !important;
+          }
+        }
+
         .organic .section-label {
           font-family: 'Crimson Pro', Georgia, serif;
           font-style: italic;
@@ -747,10 +1243,69 @@ export default function Portfolio() {
           pointer-events: none;
           z-index: 0;
         }
+
+        @media (max-width: 760px) {
+          .organic .section-label {
+            font-size: 1rem !important;
+            line-height: 1.2;
+          }
+          .organic .tag {
+            font-size: 0.86rem;
+            padding: 4px 11px;
+          }
+          .organic .btn-gold {
+            width: 100%;
+            text-align: center;
+            padding: 11px 16px;
+          }
+          .mobile-menu-link {
+            display: flex;
+            align-items: center;
+          }
+          .gl-aura {
+            inset: -120px -40vw;
+            filter: blur(48px);
+          }
+        }
       `}</style>
+
+      {/* ── 3D Promo Popup ────────────────────────────────────────── */}
+      {showPromo && !show3D && (
+        <div className="promo-3d" role="dialog" aria-live="polite">
+          <span className="promo-3d-text">
+            <span className="promo-3d-sparkle">✦</span>&nbsp; View this site in <em>3D</em>?
+          </span>
+          <button className="promo-3d-btn" onClick={launch3D}>
+            Heck, yeah →
+          </button>
+          <button className="promo-3d-close" onClick={dismissPromo} aria-label="Dismiss">
+            ✕
+          </button>
+        </div>
+      )}
+
+      {/* ── 3D Space Mode (overlay) ───────────────────────────────── */}
+      {show3D && <Space3D onExit={() => setShow3D(false)} />}
+
+      <div
+        className="page-warp-wrap"
+        style={{
+          // While in 3D: hidden (visibility:hidden removes it from the rendering pipeline so
+          // its layer can't drain GPU). On exit: fades back in with a soft zoom from scale 1.04.
+          visibility: show3D ? "hidden" : "visible",
+          opacity: show3D ? 0 : 1,
+          transform: show3D ? "scale(1.04)" : "scale(1)",
+          transformOrigin: "center 30vh",
+          transition: show3D
+            ? "opacity 0s, transform 0s"
+            : "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)",
+          pointerEvents: show3D ? "none" : "auto",
+        }}
+      >
 
       {/* ── NAV ─────────────────────────────────────────────────────── */}
       <nav
+        className="nav-bar"
         style={{
           position: "fixed",
           top: 0, left: 0, right: 0,
@@ -770,7 +1325,10 @@ export default function Portfolio() {
           <span className="font-mono" style={{ color: "var(--gold)", fontSize: "1rem", letterSpacing: "0.12em" }}>KS</span>
         </div>
 
-        <div className="desktop-nav" style={{ display: "flex", gap: 40, alignItems: "center" }}>
+        <div className="desktop-nav" style={{ display: "flex", gap: 32, alignItems: "center" }}>
+          <button onClick={launch3D} className="btn-3d-nav" aria-label="View site in 3D">
+            <span className="sparkle">✦</span> View in 3D
+          </button>
           {SECTIONS.map((s) => (
             <button
               key={s}
@@ -792,22 +1350,46 @@ export default function Portfolio() {
         </div>
 
         <button
-          className="hamburger"
+          className="hamburger hamburger-btn"
           onClick={() => setMenuOpen(!menuOpen)}
-          style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gold)", fontSize: "1.4rem" }}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gold)" }}
         >
-          {menuOpen ? "✕" : "☰"}
+          {menuOpen ? <X size={22} strokeWidth={1.8} /> : <Menu size={24} strokeWidth={1.8} />}
         </button>
       </nav>
 
+      {/* Tap-to-close backdrop behind the mobile drawer */}
+      <div
+        className={`mobile-menu-backdrop ${menuOpen ? "open" : ""}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
+
       {/* Mobile Menu */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+        <button
+          className="mobile-menu-close"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <X size={20} strokeWidth={1.8} />
+        </button>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          <button
+            onClick={() => { launch3D(); setMenuOpen(false); }}
+            className="btn-3d-nav"
+            style={{ justifyContent: "center", padding: "11px 18px", fontSize: "0.86rem", marginBottom: 4 }}
+            aria-label="View site in 3D"
+          >
+            <span className="sparkle">✦</span> View in 3D
+          </button>
           {SECTIONS.map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
-              className="font-mono"
+              className="font-mono mobile-menu-link"
               style={{
                 background: "none", border: "none", cursor: "pointer",
                 color: active === s ? "var(--gold)" : "var(--cream)",
@@ -818,7 +1400,7 @@ export default function Portfolio() {
               {NAV_LABELS[s]}
             </button>
           ))}
-          <a href="Shankar_Kailash_Resume_2_21_26.pdf" download className="btn-gold" style={{ textAlign: "center", marginTop: 10 }}>Resume</a>
+          <a href="Shankar_Kailash_Resume_2_21_26.pdf" download className="btn-gold" style={{ textAlign: "center", marginTop: 6 }}>Resume</a>
         </div>
       </div>
 
@@ -867,7 +1449,7 @@ export default function Portfolio() {
           </svg>
         ))}
 
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "120px 48px 80px", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 60 }} className="hero-content">
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "120px 48px 80px", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 60 }} className="hero-content hero-inner">
           <div className="hero-text" style={{ flex: 1 }}>
             
 
@@ -889,14 +1471,14 @@ export default function Portfolio() {
               </h2>
             </div>
 
-            <h1 className="font-hero fade-up delay-2"
+            <h1 className="font-hero fade-up delay-2 hero-title"
               style={{ fontSize: "clamp(3rem, 8.5vw, 7.5rem)", lineHeight: 1, color: "var(--cream)", marginBottom: 8, marginTop: 10 }}>
               <span className="glow-text">Building</span><br />
               <span className="gold-text glow-text-gold">technology</span><br />
               <span className="glow-text">that matters.</span>
             </h1>
 
-            <p className="font-body fade-up delay-3"
+            <p className="font-body fade-up delay-3 hero-subtitle"
               style={{ fontSize: "1.3rem", color: "var(--muted)", marginTop: 28, maxWidth: 560, lineHeight: 1.6, fontStyle: "italic" }}>
               <span style={{ color: "var(--cream)" }}>{typed}</span>
               <span className="cursor" />
@@ -904,16 +1486,16 @@ export default function Portfolio() {
               University of Florida · CS + Linguistics · GPA 4.0
             </p>
 
-            <div className="fade-up delay-4" style={{ display: "flex", gap: 24, marginTop: 44, flexWrap: "wrap", alignItems: "center" }}>
+            <div className="fade-up delay-4 hero-actions" style={{ display: "flex", gap: 24, marginTop: 44, flexWrap: "wrap", alignItems: "center" }}>
               <button onClick={() => scrollTo("projects")} className="btn-gold">View My Work</button>
               <a href="https://www.linkedin.com/in/kailash-shankar" target="_blank" rel="noreferrer"
                 style={{ color: "var(--gold)", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }}
-                className="anim-underline">
+                className="anim-underline hero-link">
                 LinkedIn ↗
               </a>
               <a href="mailto:kailashshankar@ufl.edu"
                 style={{ color: "var(--gold)", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", letterSpacing: "0.1em", textDecoration: "none" }}
-                className="anim-underline">
+                className="anim-underline hero-link">
                 kailashshankar@ufl.edu →
               </a>
             </div>
@@ -944,13 +1526,13 @@ export default function Portfolio() {
 
       {/* ── NEXT UP ─────────────────────────────────────────────────── */}
       <section className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
+        <div className="section-shell" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
+          <div className="section-heading" style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
             <span className="section-label">Next Up</span>
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
 
-          <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 0" }}>
+          <div className="next-up-body" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 0" }}>
             <div className="gl-aura" />
             <div className="gl-logo" style={{ position: "relative", zIndex: 1 }} />
             <div style={{ position: "relative", zIndex: 1, marginTop: 48, textAlign: "center" }}>
@@ -969,8 +1551,8 @@ export default function Portfolio() {
 
       {/* ── EXPERIENCE ──────────────────────────────────────────────── */}
       <section id="experience" className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
+        <div className="section-shell" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
+          <div className="section-heading" style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
             <span className="section-label">Experience</span>
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
@@ -1001,8 +1583,8 @@ export default function Portfolio() {
 
       {/* ── RESEARCH ────────────────────────────────────────────────── */}
       <section id="research" className="organic" style={{ padding: "120px 0", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 56 }}>
+        <div className="section-shell" style={{ maxWidth: 900, margin: "0 auto", padding: "0 48px" }}>
+          <div className="section-heading" style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 56 }}>
             <span className="section-label">Research</span>
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
@@ -1015,11 +1597,11 @@ export default function Portfolio() {
             Computational Linguistics Lab
           </h3>
 
-          <p className="font-body" style={{ fontSize: "1.22rem", lineHeight: 1.8, color: "var(--cream)", marginBottom: 28 }}>
+          <p className="font-body research-intro" style={{ fontSize: "1.22rem", lineHeight: 1.8, color: "var(--cream)", marginBottom: 28 }}>
             Language shapes how we see the world — yet most of today&rsquo;s AI speaks only a handful of them fluently. Working with Dr. Zoey Liu, I investigate how <em style={{ color: "var(--gold-light)" }}>data partitioning strategies on LLM training data</em> impact model generalization across the world&rsquo;s linguistic diversity, with a particular focus on low-resource languages that are systematically underrepresented in modern AI.
           </p>
 
-          <p className="font-body" style={{ fontSize: "1.22rem", lineHeight: 1.8, color: "var(--muted)", marginBottom: 64 }}>
+          <p className="font-body research-body" style={{ fontSize: "1.22rem", lineHeight: 1.8, color: "var(--muted)", marginBottom: 64 }}>
             My current work quantifies a fundamental trade-off: <span style={{ color: "var(--cream)" }}>how much does annotation quality matter when data is scarce?</span> By systematically injecting controlled annotation noise into training sets and benchmarking OLMo-2 across 2,000 languages on UF&rsquo;s HiPerGator supercomputer, I&rsquo;m building an empirical map of where AI breaks down — and how to fix it.
           </p>
 
@@ -1027,7 +1609,7 @@ export default function Portfolio() {
             <span style={{ color: "var(--gold)", opacity: 0.5, fontSize: "1.4rem", letterSpacing: "0.6em" }}>✦ ✦ ✦</span>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 48, marginBottom: 64 }}>
+          <div className="research-stats" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 48, marginBottom: 64 }}>
             {[
               { title: "Quality vs. Quantity", body: "Modeling the trade-off between dataset scale and annotation fidelity — a question with outsized implications for languages where data is precious." },
               { title: "2,000 Languages", body: "Benchmarking across a typologically diverse language set to understand how multilingual scale affects cross-linguistic transfer beyond high-resource clusters." },
@@ -1052,8 +1634,8 @@ export default function Portfolio() {
 
       {/* ── PROJECTS ────────────────────────────────────────────────── */}
       <section id="projects" className="organic" style={{ padding: "100px 0", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
+        <div className="section-shell" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
+          <div className="section-heading" style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 64 }}>
             <span className="section-label">Projects</span>
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
@@ -1065,11 +1647,11 @@ export default function Portfolio() {
               images={["lingua_0.png", "lingua_1.png", "lingua_2.png", "lingua_3.png", "lingua_4.png", "lingua_5.png", "lingua_6.png", "lingua_7.png"]}
             />
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-              <div style={{ padding: "48px", borderRight: "1px solid var(--border)" }}>
+            <div className="lingua-detail-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              <div className="lingua-copy" style={{ padding: "48px", borderRight: "1px solid var(--border)" }}>
                 <p className="font-body" style={{ color: "var(--gold-light)", fontStyle: "italic", fontSize: "0.98rem", marginBottom: 16 }}>Jan 2026 – Present</p>
                 <h2 style={{ marginBottom: 8, lineHeight: 1 }}>
-                  <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="lingua-link font-display" style={{ fontSize: "3.8rem", lineHeight: 1 }}>
+                  <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="lingua-link font-display lingua-title-link" style={{ fontSize: "3.8rem", lineHeight: 1 }}>
                     LINGUA
                   </a>
                 </h2>
@@ -1084,7 +1666,7 @@ export default function Portfolio() {
                 </div>
                 <a href="https://linguaclassroom.com" target="_blank" rel="noreferrer" className="btn-gold">View at linguaclassroom.com →</a>
               </div>
-              <div style={{ padding: "48px", background: "var(--bg3)" }}>
+              <div className="lingua-features" style={{ padding: "48px", background: "var(--bg3)" }}>
                 <p className="section-label" style={{ marginBottom: 28 }}>Platform Features</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
                   {[
@@ -1106,12 +1688,12 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="project-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {[
               { id: "career", title: "AI Career Coach", date: "Nov – Dec 2025", subtitle: "Resume Optimizer & Interview Simulator", description: "End-to-end AI career prep tool: Gemini-powered ATS-compliant resume generation, mock interview engine with performance persistence, and automated weekly industry skill & salary trend updates via Inngest workflows.", tags: ["Next.js", "NeonDB", "Prisma", "Inngest", "Gemini Flash"], emoji: "" },
               { id: "housing", title: "Home Price Estimator", date: "Oct – Nov 2025", subtitle: "Data Structures · Full-Stack", description: "Full-stack web app delivering neighborhood housing price estimates at 98% accuracy. Implements Red-Black Tree and B-Tree structures to query 100,000+ records in O(log n) time — a C++ backend connected to a React frontend via Next.js.", tags: ["React", "Next.js", "C++", "httplib", "Red-Black Tree"], emoji: "" },
             ].map((p) => (
-              <div key={p.id} className="impact-card"
+              <div key={p.id} className="impact-card project-card"
                 onMouseEnter={() => setHoveredProject(p.id)}
                 onMouseLeave={() => setHoveredProject(null)}
                 style={{ padding: "40px", cursor: "default", position: "relative", overflow: "hidden" }}>
@@ -1136,12 +1718,12 @@ export default function Portfolio() {
 
       {/* ── SKILLS ──────────────────────────────────────────────────── */}
       <section className="organic" style={{ padding: "80px 0", background: "var(--bg2)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 48 }}>
+        <div className="section-shell" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
+          <div className="section-heading" style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 48 }}>
             <span className="section-label">Technical Arsenal</span>
             <div className="gold-divider" style={{ flex: 1 }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 2 }}>
+          <div className="skills-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 2 }}>
             {[
               { cat: "Languages",  items: ["Python", "C/C++", "JavaScript", "HTML/CSS", "MATLAB"] },
               { cat: "Frameworks", items: ["React", "Next.js", "Node.js", "FastAPI", "Tailwind CSS"] },
@@ -1149,7 +1731,7 @@ export default function Portfolio() {
               { cat: "Databases",  items: ["PostgreSQL", "MongoDB", "Supabase", "NeonDB"] },
               { cat: "Tools",      items: ["Docker", "Git", "Linux", "Prisma", "Inngest", "HiPerGator"] },
             ].map((cat) => (
-              <div key={cat.cat} className="impact-card" style={{ padding: "28px 24px" }}>
+              <div key={cat.cat} className="impact-card skill-card" style={{ padding: "28px 24px" }}>
                 <div className="font-mono" style={{ fontSize: "0.68rem", color: "var(--gold)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>{cat.cat}</div>
                 {cat.items.map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
@@ -1164,7 +1746,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── CONTACT ─────────────────────────────────────────────────── */}
-      <section id="contact" style={{ padding: "120px 0", background: "var(--bg)", position: "relative", overflow: "hidden" }}>
+      <section id="contact" className="contact-section" style={{ padding: "120px 0", background: "var(--bg)", position: "relative", overflow: "hidden" }}>
 
         {/* ── Contact Sparkles ── */}
         {[
@@ -1234,26 +1816,28 @@ export default function Portfolio() {
           </svg>
         ))}
         <div className="glow-orb" style={{ width: 600, height: 600, background: "rgba(201,168,76,0.04)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", padding: "0 48px", textAlign: "center" }}>
+        <div className="contact-inner" style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", padding: "0 48px", textAlign: "center" }}>
           <span className="section-label" style={{ display: "block", marginBottom: 20 }}>Let's Build Something</span>
-          <h2 className="font-hero" style={{ fontSize: "clamp(2.6rem, 6vw, 5.2rem)", color: "var(--cream)", lineHeight: 1.02, marginBottom: 32 }}>
+          <h2 className="font-hero contact-title" style={{ fontSize: "clamp(2.6rem, 6vw, 5.2rem)", color: "var(--cream)", lineHeight: 1.02, marginBottom: 32 }}>
             <span className="glow-text">Real problems.</span><br />
             <span className="gold-text glow-text-gold">Real solutions.</span>
           </h2>
-          <p className="font-body" style={{ fontSize: "1.2rem", color: "var(--muted)", lineHeight: 1.7, marginBottom: 48, fontStyle: "italic" }}>
+          <p className="font-body contact-copy" style={{ fontSize: "1.2rem", color: "var(--muted)", lineHeight: 1.7, marginBottom: 48, fontStyle: "italic" }}>
             I'm looking for opportunities where I can keep doing what I love — building technology that has a genuine impact on real people's lives.
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="contact-actions" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <a href="mailto:kailashshankar@ufl.edu" className="btn-gold">kailashshankar@ufl.edu</a>
             <a href="https://linkedin.com/in/kailash-shankar" target="_blank" rel="noreferrer" className="btn-gold">LinkedIn ↗</a>
             <a href="https://github.com/Kailash-Shankar" target="_blank" rel="noreferrer" className="btn-gold">GitHub ↗</a>
           </div>
           <div className="gold-divider" style={{ margin: "64px 0 32px" }} />
-          <p className="font-mono" style={{ color: "var(--muted)", fontSize: "0.72rem", letterSpacing: "0.1em" }}>
+          <p className="font-mono footer-copy" style={{ color: "var(--muted)", fontSize: "0.72rem", letterSpacing: "0.1em" }}>
             © 2026 KAILASH SHANKAR · GAINESVILLE, FL
           </p>
         </div>
       </section>
+
+      </div>{/* /page-warp-wrap */}
     </>
   );
 }
@@ -1310,25 +1894,25 @@ function ExperienceBlock({ date, org, location, role, tags, emoji, description }
   tags: string[]; emoji: string; description: string;
 }) {
   return (
-    <div className="impact-card" style={{ padding: "40px 48px", marginBottom: 2 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
-        <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+    <div className="impact-card experience-card" style={{ padding: "40px 48px", marginBottom: 2 }}>
+      <div className="experience-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
+        <div className="experience-main" style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
           <div style={{ fontSize: "2rem", marginTop: 4 }}>{emoji}</div>
           <div>
-            <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 4 }}>
+            <div className="experience-org-row" style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 4 }}>
               <h3 className="font-serif" style={{ fontSize: "1.5rem", color: "var(--cream)" }}>{org}</h3>
               <span className="font-mono" style={{ fontSize: "0.68rem", color: "var(--muted)" }}>{location}</span>
             </div>
             <div className="font-mono" style={{ color: "var(--gold)", fontSize: "0.78rem", letterSpacing: "0.06em" }}>{role}</div>
           </div>
         </div>
-        <div style={{ textAlign: "right" }}>
+        <div className="experience-date" style={{ textAlign: "right" }}>
           <div className="font-mono" style={{ fontSize: "0.7rem", color: "var(--muted)" }}>{date}</div>
         </div>
       </div>
       <div style={{ marginTop: 28 }}>
         <div className="gold-divider" style={{ marginBottom: 24 }} />
-        <p className="font-body" style={{ fontSize: "1.1rem", lineHeight: 1.78, color: "var(--muted)", marginBottom: 24 }}>{description}</p>
+        <p className="font-body experience-description" style={{ fontSize: "1.1rem", lineHeight: 1.78, color: "var(--muted)", marginBottom: 24 }}>{description}</p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {tags.map((t) => <span key={t} className="tag">{t}</span>)}
         </div>
